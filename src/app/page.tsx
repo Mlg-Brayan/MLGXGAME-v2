@@ -6,12 +6,12 @@ export default async function Home() {
   const { data: pcGames, error: pcError } = await supabase
     .from('games')
     .select('*')
-    .eq('platform', 'pc');
+    .contains('platform', ['pc']);
 
   const { data: appGames, error: appError } = await supabase
     .from('games')
     .select('*')
-    .in('platform', ['android', 'ios']);
+    .overlaps('platform', ['android', 'ios']);
 
   if (pcError) console.error('Erreur PC games:', pcError);
   if (appError) console.error('Erreur App games:', appError);
