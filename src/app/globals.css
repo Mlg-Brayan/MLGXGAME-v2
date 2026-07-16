@@ -166,3 +166,85 @@ a {
 .side-panel nav a:hover {
   color: var(--accent);
 }
+.game-section {
+  padding: 24px;
+}
+
+.game-section h2 {
+  font-size: 20px;
+  margin-bottom: 16px;
+  color: var(--text-primary);
+}
+
+.game-row {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scrollbar-width: thin;
+}
+
+.game-card {
+  flex-shrink: 0;
+  width: 180px;
+  display: block;
+}
+
+.game-card-image {
+  position: relative;
+  width: 180px;
+  height: 100px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+}
+
+.game-card-image img {
+  object-fit: cover;
+}
+
+.game-card-title {
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.game-card-category {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.game-row {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.game-row::-webkit-scrollbar {
+  display: none;
+}
+
+.dots-container {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border-color);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s;
+}
+
+.dot-active {
+  background: var(--accent);
+}
