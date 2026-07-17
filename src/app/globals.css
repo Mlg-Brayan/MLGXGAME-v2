@@ -314,3 +314,90 @@ a {
     flex-basis: 100%;
   }
 }
+.vote-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.vote-btn:hover:not(:disabled) {
+  background: var(--accent);
+  color: var(--bg-primary);
+}
+
+.vote-btn-voted {
+  background: var(--accent-dark);
+  color: var(--text-primary);
+  border-color: var(--accent-dark);
+  cursor: default;
+}
+.best-games {
+  padding: clamp(20px, 3vw, 40px) clamp(16px, 4vw, 48px);
+}
+
+.best-games h2 {
+  font-size: clamp(18px, 2.2vw, 24px);
+  margin-bottom: 24px;
+}
+
+.best-games-chart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: clamp(16px, 3vw, 40px);
+  height: 220px;
+}
+
+.best-games-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.best-games-count {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.best-games-bar {
+  width: clamp(40px, 6vw, 64px);
+  background: linear-gradient(to top, var(--accent-dark), var(--accent));
+  border-radius: 8px 8px 0 0;
+  transition: height 0.4s ease;
+}
+
+.best-games-name {
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-size: clamp(12px, 1.3vw, 14px);
+  font-weight: 600;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+
+.best-games-name:hover:not(:disabled) {
+  color: var(--accent);
+}
+
+.best-games-name-voted {
+  background: var(--accent);
+  color: var(--bg-primary);
+}
+
+.best-games-name:disabled {
+  cursor: default;
+}

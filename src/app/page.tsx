@@ -1,6 +1,7 @@
 import Header from '@/components/Header';
 import GameSection from '@/components/GameSection';
 import { supabase } from '@/lib/supabaseClient';
+import BestGamesChart from '@/components/BestGamesChart';
 
 export default async function Home() {
   const { data: pcGames, error: pcError } = await supabase
@@ -21,6 +22,7 @@ export default async function Home() {
       <Header />
       <GameSection title="Top Jeux PC" games={pcGames ?? []} />
       <GameSection title="Top Jeux Mobile" games={appGames ?? []} />
+       <BestGamesChart />
     </main>
   );
 }
