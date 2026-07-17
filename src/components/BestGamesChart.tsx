@@ -67,7 +67,7 @@ export default function BestGamesChart() {
 
   return (
     <section className="best-games">
-      <h2>Meilleur jeu 2026 selon vous</h2>
+     <h2>Selon toi quel est le meilleur jeux 2026 ? </h2>
       <div className="best-games-chart">
         {games.map((game) => (
           <div key={game.id} className="best-games-column">

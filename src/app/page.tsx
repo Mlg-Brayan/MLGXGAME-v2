@@ -22,7 +22,7 @@ export default async function Home() {
       <Header />
       <GameSection title="Top Jeux PC" games={pcGames ?? []} />
       <GameSection title="Top Jeux Mobile" games={appGames ?? []} />
-       <BestGamesChart />
+      <BestGamesChart />
     </main>
   );
 }
