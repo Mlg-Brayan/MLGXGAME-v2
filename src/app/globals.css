@@ -633,3 +633,212 @@ a {
 .showcase-title-row h2 {
   margin-bottom: 0;
 }
+.about-section {
+  padding: clamp(32px, 5vw, 64px) clamp(16px, 4vw, 48px);
+  background: var(--bg-card);
+  margin-top: clamp(20px, 3vw, 40px);
+}
+
+.about-content {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.about-content h2 {
+  font-size: clamp(20px, 2.5vw, 28px);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.about-content p {
+  font-size: clamp(14px, 1.5vw, 16px);
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+.about-section {
+  padding: clamp(40px, 6vw, 80px) clamp(16px, 4vw, 48px);
+  background: linear-gradient(180deg, var(--bg-card), var(--bg-primary));
+  margin-top: clamp(20px, 3vw, 40px);
+  text-align: center;
+}
+
+.about-badge {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 20px;
+  background: rgba(127, 119, 221, 0.15);
+  color: var(--accent);
+  font-size: clamp(11px, 1.2vw, 13px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 16px;
+}
+
+.about-content {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.about-content h2 {
+  font-size: clamp(22px, 3vw, 32px);
+  margin-bottom: 24px;
+}
+
+.about-content p {
+  font-size: clamp(14px, 1.5vw, 16px);
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.about-stats {
+  display: flex;
+  justify-content: center;
+  gap: clamp(24px, 5vw, 56px);
+  margin-top: 32px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border-color);
+}
+
+.about-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.about-stat-number {
+  font-size: clamp(22px, 3vw, 30px);
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.about-stat-label {
+  font-size: clamp(11px, 1.2vw, 13px);
+  color: var(--text-secondary);
+}
+
+.site-footer {
+  padding: 24px clamp(16px, 4vw, 48px);
+  text-align: center;
+  border-top: 1px solid var(--border-color);
+}
+
+.site-footer p {
+  font-size: clamp(12px, 1.3vw, 14px);
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+
+.footer-credit {
+  font-size: clamp(11px, 1.2vw, 12px);
+  opacity: 0.7;
+}
+.comments-section {
+  padding: clamp(32px, 5vw, 56px) clamp(16px, 4vw, 48px);
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.comments-section h2 {
+  font-size: clamp(20px, 2.5vw, 26px);
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 32px;
+  padding: 20px;
+  background: var(--bg-card);
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+}
+
+.comment-form input,
+.comment-form textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 14px;
+  resize: none;
+}
+
+.comment-form input::placeholder,
+.comment-form textarea::placeholder {
+  color: var(--text-secondary);
+}
+
+.comment-form button {
+  align-self: flex-end;
+  padding: 8px 24px;
+  border-radius: 20px;
+  border: none;
+  background: var(--accent);
+  color: var(--bg-primary);
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.comment-form button:hover:not(:disabled) {
+  background: var(--accent-dark);
+  color: var(--text-primary);
+}
+
+.comment-form button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.comments-empty {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.comment-item {
+  padding: 16px;
+  background: var(--bg-card);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.comment-name {
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 14px;
+}
+
+.comment-date {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.comment-message {
+  font-size: 14px;
+  color: var(--text-primary);
+  line-height: 1.5;
+}

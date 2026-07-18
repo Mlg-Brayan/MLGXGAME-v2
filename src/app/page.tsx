@@ -4,6 +4,9 @@ import BestGamesChart from '@/components/BestGamesChart';
 import QuickNav from '@/components/QuickNav';
 import CategoryShowcase from '@/components/CategoryShowcase';
 import { supabase } from '@/lib/supabaseClient';
+import AboutSection from '@/components/AboutSection';
+import Footer from '@/components/Footer';
+import CommentsSection from '@/components/CommentsSection';
 
 export default async function Home() {
   const { data: pcGames } = await supabase.from('games').select('*').contains('platform', ['pc']);
@@ -26,6 +29,9 @@ export default async function Home() {
       <CategoryShowcase title="Applications Gaming" items={applications ?? []} itemHrefPrefix="/applications" seeMoreHref="/applications" iconName="appwindow" accentColor="#E3A64F" />
       <CategoryShowcase title="Templates Web" items={templates ?? []} itemHrefPrefix="/templates" seeMoreHref="/templates" iconName="template" accentColor="#E35C8A" />
       <CategoryShowcase title="Boutique" items={boutique ?? []} itemHrefPrefix="/boutique" seeMoreHref="/boutique" iconName="shop" accentColor="#B565E0" />
+      <AboutSection />
+      <CommentsSection />
+      <Footer />
     </main>
   );
 }
