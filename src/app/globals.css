@@ -402,3 +402,234 @@ a {
 .best-games-name:disabled {
   cursor: default;
 }
+.bento-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(10px, 1.5vw, 16px);
+  padding: clamp(16px, 3vw, 32px) clamp(16px, 4vw, 48px);
+}
+
+.bento-small-tiles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(10px, 1.5vw, 16px);
+}
+
+.bento-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: clamp(14px, 2vw, 22px) 8px;
+  border-radius: 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  font-size: clamp(11px, 1.2vw, 13px);
+  font-weight: 600;
+  text-align: center;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.bento-tile:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+}
+
+.bento-icon {
+  width: clamp(20px, 2.6vw, 28px);
+  height: clamp(20px, 2.6vw, 28px);
+  color: var(--accent);
+}
+
+.bento-big-tile {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--accent-dark), var(--bg-card));
+  min-height: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+
+.bento-big-overlay {
+  width: 100%;
+  padding: clamp(16px, 2.5vw, 24px);
+  background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+}
+
+.bento-big-text {
+  color: var(--text-primary);
+  font-size: clamp(16px, 2vw, 22px);
+  font-weight: 700;
+}
+
+@media (max-width: 640px) {
+  .bento-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.category-showcase {
+  padding: clamp(16px, 3vw, 32px) clamp(16px, 4vw, 48px);
+}
+
+.category-showcase h2 {
+  font-size: clamp(18px, 2.2vw, 24px);
+  margin-bottom: 16px;
+}
+
+.showcase-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: clamp(10px, 1.5vw, 16px);
+}
+
+.showcase-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.showcase-card-image {
+  position: relative;
+  width: 100%;
+  height: clamp(80px, 10vw, 110px);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+}
+
+.showcase-card-image img {
+  object-fit: cover;
+}
+
+.showcase-card-title {
+  font-size: clamp(12px, 1.3vw, 14px);
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.showcase-more-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: clamp(80px, 10vw, 110px);
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--accent-dark), var(--bg-card));
+  color: var(--text-primary);
+  font-weight: 700;
+  font-size: clamp(13px, 1.4vw, 15px);
+}
+.category-showcase {
+  padding: clamp(16px, 3vw, 32px) clamp(16px, 4vw, 48px);
+}
+
+.category-showcase h2 {
+  font-size: clamp(18px, 2.2vw, 24px);
+  margin-bottom: 16px;
+}
+
+.showcase-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: clamp(10px, 1.5vw, 16px);
+}
+
+.showcase-small-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(10px, 1.5vw, 16px);
+}
+
+.showcase-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.showcase-card-image {
+  position: relative;
+  width: 100%;
+  height: clamp(70px, 9vw, 100px);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+}
+
+.showcase-card-image img {
+  object-fit: cover;
+}
+
+.showcase-card-title {
+  font-size: clamp(11px, 1.2vw, 13px);
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.showcase-big-card {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--bg-card);
+  min-height: 100%;
+  display: block;
+}
+
+.showcase-big-image {
+  object-fit: cover;
+  transition: opacity 1s ease;
+}
+
+.showcase-big-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  padding: clamp(16px, 2.5vw, 24px);
+  background: linear-gradient(to top, rgba(0,0,0,0.75), transparent 60%);
+}
+
+.showcase-big-overlay span {
+  color: var(--text-primary);
+  font-size: clamp(16px, 2vw, 22px);
+  font-weight: 700;
+}
+
+@media (max-width: 640px) {
+  .showcase-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .showcase-big-card {
+    min-height: 160px;
+  }
+}
+.category-showcase {
+  padding-left: clamp(20px, 4vw, 52px);
+}
+
+.showcase-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.showcase-title-icon {
+  width: clamp(20px, 2.4vw, 26px);
+  height: clamp(20px, 2.4vw, 26px);
+  flex-shrink: 0;
+}
+
+.showcase-title-row h2 {
+  margin-bottom: 0;
+}
