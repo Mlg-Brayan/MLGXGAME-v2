@@ -604,14 +604,16 @@ a {
   font-weight: 700;
 }
 
-@media (max-width: 640px) {
-  .showcase-layout {
-    grid-template-columns: 1fr;
-  }
+.showcase-layout {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: clamp(6px, 1.5vw, 16px);
+}
 
-  .showcase-big-card {
-    min-height: 160px;
-  }
+.showcase-small-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(6px, 1.5vw, 16px);
 }
 .category-showcase {
   padding-left: clamp(20px, 4vw, 52px);
