@@ -44,13 +44,17 @@ export default function Header() {
             <button className="close-btn" onClick={() => setMenuOpen(false)} aria-label="Fermer le menu">
               ✕
             </button>
-            <nav>
-              <a href="/">Accueil</a>
-              <a href="/pc">Jeux PC</a>
-              <a href="/android">Android</a>
-              <a href="/ios">iOS</a>
-              <a href="/premium">Premium</a>
-            </nav>
+           <nav>
+             <a href="/">Accueil</a>
+             <a href="/pc">Jeux PC</a>
+             <a href="/mobile">Jeux Mobile</a>
+             <a href="/online">Jeux en ligne</a>
+            <a href="/applications">Applications Gaming</a>
+            <a href="/templates">Templates Web</a>
+            <a href="/boutique">Boutique</a>
+            <a href="/discussion">Discussion</a>
+            <a href="/premium">Version Premium</a>
+          </nav>
           </div>
         </div>
       )}

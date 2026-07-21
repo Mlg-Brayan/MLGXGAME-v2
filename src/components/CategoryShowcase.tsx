@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Globe, Monitor, Smartphone, AppWindow, LayoutTemplate, ShoppingBag } from 'lucide-react';
+import { sortByPreference, trackCategoryClick } from '@/lib/trackInteraction';
 
 const icons = {
   globe: Globe,
@@ -19,6 +20,7 @@ type Item = {
   title: string;
   slug: string;
   image_url: string;
+  category?: string;
 };
 
 export default function CategoryShowcase({
@@ -36,7 +38,9 @@ export default function CategoryShowcase({
   iconName: keyof typeof icons;
   accentColor: string;
 }) {
-  const displayItems = items.slice(0, 4);
+  const sortedItems = sortByPreference(items);
+  const displayItems = sortedItems.slice(0, 4);
+  if (displayItems.length === 0) return null;
   const [activeIndex, setActiveIndex] = useState(0);
   const Icon = icons[iconName];
 
@@ -59,7 +63,12 @@ export default function CategoryShowcase({
       <div className="showcase-layout">
         <div className="showcase-small-grid">
           {displayItems.map((item) => (
-            <Link key={item.id} href={`${itemHrefPrefix}/${item.slug}`} className="showcase-card">
+            <Link
+              key={item.id}
+              href={`${itemHrefPrefix}/${item.slug}`}
+              className="showcase-card"
+              onClick={() => item.category && trackCategoryClick(item.category)}
+            >
               <div className="showcase-card-image">
                 <Image src={item.image_url} alt={item.title} fill sizes="200px" />
               </div>

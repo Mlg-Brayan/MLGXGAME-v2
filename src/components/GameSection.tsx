@@ -1,13 +1,16 @@
 'use client';
 
 import { useRef, useState, useEffect } from 'react';
-import GameCard from './GameCard';
+import Image from 'next/image';
+import Link from 'next/link';
 import { Game } from '@/lib/mockGames';
+import { sortByPreference, trackCategoryClick } from '@/lib/trackInteraction';
 
 export default function GameSection({ title, games }: { title: string; games: Game[] }) {
   const rowRef = useRef<HTMLDivElement>(null);
   const [activeDot, setActiveDot] = useState(0);
   const [dotCount, setDotCount] = useState(1);
+  const sortedGames = sortByPreference(games);
 
   useEffect(() => {
     const row = rowRef.current;
@@ -33,31 +36,52 @@ export default function GameSection({ title, games }: { title: string; games: Ga
     };
   }, [games]);
 
-  const scrollToPage = (index: number) => {
+  useEffect(() => {
     const row = rowRef.current;
-    if (!row) return;
-    row.scrollTo({ left: index * row.clientWidth, behavior: 'smooth' });
-  };
+    if (!row || sortedGames.length <= 1) return;
+
+    const interval = setInterval(() => {
+      const cardWidth = row.firstElementChild?.clientWidth ?? 300;
+      const gap = 16;
+      const maxScroll = row.scrollWidth - row.clientWidth;
+
+      if (row.scrollLeft >= maxScroll - 5) {
+        row.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        row.scrollBy({ left: cardWidth + gap, behavior: 'smooth' });
+      }
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [sortedGames]);
+  if (games.length === 0) return null;
 
   return (
     <section className="game-section">
       <h2>{title}</h2>
-      <div className="game-row" ref={rowRef}>
-        {games.map((game) => (
-          <GameCard key={game.id} game={game} />
+      <div className="recommended-row" ref={rowRef}>
+        {sortedGames.map((game) => (
+          <Link
+            key={game.id}
+            href={`/jeux/${game.slug}`}
+            className="recommended-card"
+            onClick={() => trackCategoryClick(game.category)}
+          >
+            <Image src={game.image_url} alt={game.title} fill sizes="500px" className="recommended-card-image" />
+            <div className="recommended-card-overlay">
+              <span className="recommended-card-title">{game.title}</span>
+              <span className="recommended-card-category">{game.category}</span>
+            </div>
+          </Link>
         ))}
       </div>
 
       {dotCount > 1 && (
-        <div className="dots-container">
-          {Array.from({ length: dotCount }).map((_, i) => (
-            <button
-              key={i}
-              className={`dot ${i === activeDot ? 'dot-active' : ''}`}
-              onClick={() => scrollToPage(i)}
-              aria-label={`Aller à la page ${i + 1}`}
-            />
-          ))}
+        <div className="progress-track">
+          <div
+            className="progress-fill"
+            style={{ width: `${((activeDot + 1) / dotCount) * 100}%` }}
+          />
         </div>
       )}
     </section>
