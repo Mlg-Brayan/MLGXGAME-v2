@@ -10,7 +10,11 @@ export default function GameSection({ title, games }: { title: string; games: Ga
   const rowRef = useRef<HTMLDivElement>(null);
   const [activeDot, setActiveDot] = useState(0);
   const [dotCount, setDotCount] = useState(1);
-  const sortedGames = sortByPreference(games);
+  const [sortedGames, setSortedGames] = useState(games);
+
+useEffect(() => {
+  setSortedGames(sortByPreference(games));
+}, [games]);
 
   useEffect(() => {
     const row = rowRef.current;

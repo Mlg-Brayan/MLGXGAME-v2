@@ -38,8 +38,14 @@ export default function CategoryShowcase({
   iconName: keyof typeof icons;
   accentColor: string;
 }) {
-  const sortedItems = sortByPreference(items);
-  const displayItems = sortedItems.slice(0, 4);
+  const [sortedItems, setSortedItems] = useState(items);
+
+useEffect(() => {
+  setSortedItems(sortByPreference(items));
+}, [items]);
+
+const displayItems = sortedItems.slice(0, 4);
+
   if (displayItems.length === 0) return null;
   const [activeIndex, setActiveIndex] = useState(0);
   const Icon = icons[iconName];
