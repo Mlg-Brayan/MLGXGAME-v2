@@ -4,17 +4,17 @@ import { supabase } from '@/lib/supabaseClient';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default async function PcGamesPage() {
+export default async function OnlineGamesPage() {
   const { data: games } = await supabase
     .from('games')
     .select('*')
-    .contains('platform', ['pc']);
+    .contains('platform', ['web']);
 
   return (
     <main>
       <Header />
       <div style={{ padding: '32px clamp(16px, 4vw, 48px)' }}>
-        <h1>Jeux PC</h1>
+        <h1>Jeux en ligne</h1>
         <p style={{ color: 'var(--text-secondary)', marginBottom: '24px' }}>
           {games?.length ?? 0} jeu{(games?.length ?? 0) > 1 ? 'x' : ''}
         </p>
