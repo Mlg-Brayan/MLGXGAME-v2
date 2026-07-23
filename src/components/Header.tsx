@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { supabase } from '@/lib/supabaseClient';
+import { useMenu } from '@/context/MenuContext';
 
 type Result = {
   id: number;
@@ -14,7 +15,7 @@ type Result = {
 };
 
 export default function Header() {
-  const [menuOpen, setMenuOpen] = useState(false);
+ const { menuOpen, setMenuOpen } = useMenu();
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<Result[]>([]);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -69,14 +70,18 @@ export default function Header() {
   return (
     <>
       <header className="site-header">
-        <button className="hamburger-btn" onClick={() => setMenuOpen(true)} aria-label="Ouvrir le menu">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
+      <button
+  className={`hamburger-btn hamburger-mobile-only ${menuOpen ? 'hamburger-active' : ''}`}
+  onClick={() => setMenuOpen(true)}
+  aria-label="Ouvrir le menu"
+>
+  <span></span>
+  <span></span>
+  <span></span>
+</button>
 
         <a href="/" className="logo-link">
-          <Image src="/logo.svg" alt="MLGXGAME" width={140} height={40} priority />
+          <Image src="/logo.svg" alt="MLGXGAME" width={140} height={60} priority />
         </a>
 
         <div className="search-bar" ref={searchRef}>
@@ -126,25 +131,6 @@ export default function Header() {
           <button className="icon-btn" aria-label="Assistant IA">🤖</button>
         </div>
       </header>
-
-      {menuOpen && (
-        <div className="side-panel-overlay" onClick={() => setMenuOpen(false)}>
-          <div className="side-panel" onClick={(e) => e.stopPropagation()}>
-            <button className="close-btn" onClick={() => setMenuOpen(false)} aria-label="Fermer le menu">✕</button>
-            <nav>
-              <a href="/">Accueil</a>
-              <a href="/pc">Jeux PC</a>
-              <a href="/mobile">Jeux Mobile</a>
-              <a href="/online">Jeux en ligne</a>
-              <a href="/applications">Applications Gaming</a>
-              <a href="/templates">Templates Web</a>
-              <a href="/boutique">Boutique</a>
-              <a href="/discussion">Discussion</a>
-              <a href="/premium">Premium</a>
-            </nav>
-          </div>
-        </div>
-      )}
     </>
   );
 }
