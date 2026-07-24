@@ -1,8 +1,13 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import CategoryListingPage from '@/components/CategoryListingPage';
 import { supabase } from '@/lib/supabaseClient';
-import Image from 'next/image';
-import Link from 'next/link';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Jeux PC - MLGXGAME',
+  description: 'Découvrez notre sélection de jeux PC, gratuits ou payants, des FPS compétitifs aux jeux d\'aventure en monde ouvert.',
+};
 
 export default async function PcGamesPage() {
   const { data: games } = await supabase
@@ -13,22 +18,12 @@ export default async function PcGamesPage() {
   return (
     <main>
       <Header />
-      <div style={{ padding: '32px clamp(16px, 4vw, 48px)' }}>
-        <h1>Jeux PC</h1>
-        <p style={{ color: 'var(--text-secondary)', marginBottom: '24px' }}>
-          {games?.length ?? 0} jeu{(games?.length ?? 0) > 1 ? 'x' : ''}
-        </p>
-        <div className="showcase-grid">
-          {(games ?? []).map((game) => (
-            <Link key={game.id} href={`/jeux/${game.slug}`} className="showcase-card">
-              <div className="showcase-card-image">
-                <Image src={game.image_url} alt={game.title} fill sizes="200px" />
-              </div>
-              <span className="showcase-card-title">{game.title}</span>
-            </Link>
-          ))}
-        </div>
-      </div>
+      <p style={{ padding: '24px clamp(16px, 4vw, 48px) 0', color: 'var(--text-secondary)', maxWidth: '700px' }}>
+  Découvrez notre sélection de jeux PC, des FPS compétitifs aux jeux d&apos;aventure en monde
+  ouvert — gratuits ou payants selon vos envies. Un catalogue mis à jour régulièrement pour tous
+  les styles de joueurs.
+</p>
+      <CategoryListingPage items={games ?? []} itemHrefPrefix="/jeux" pageTitle="Jeux PC" />
       <Footer />
     </main>
   );

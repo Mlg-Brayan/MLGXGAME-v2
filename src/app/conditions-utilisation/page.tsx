@@ -64,6 +64,32 @@ export default function TermsPage() {
           fonctionnalités ou son contenu. En revanche, les propos insultants, injurieux, harcelants ou
           dénués de toute intention constructive ne sont pas tolérés et pourront être supprimés.
         </p>
+        <h2>5bis. Charte de contenu et ligne éditoriale</h2>
+<p>
+  MLGXGAME s&apos;engage à proposer un contenu accessible et respectueux. À ce titre, le Site
+  s&apos;interdit de référencer ou de promouvoir tout jeu, application, produit ou contenu qui :
+</p>
+<ul>
+  <li>
+    Incite à la violence extrême, glorifie la violence graphique ou représente des actes de
+    cruauté de manière réaliste ;
+  </li>
+  <li>
+    Contient des éléments à caractère sexuel explicite ou à connotation sexuelle inappropriée ;
+  </li>
+  <li>
+    Fait la promotion de pratiques occultes, du spiritisme ou de tout contenu à caractère
+    ésotérique présenté comme réel ;
+  </li>
+  <li>
+    Fait la promotion de la haine, de la discrimination ou de toute forme d&apos;extrémisme.
+  </li>
+</ul>
+<p>
+  MLGXGAME se réserve le droit d&apos;évaluer, au cas par cas et selon son appréciation, la
+  conformité d&apos;un contenu à cette charte, et de retirer tout contenu qui ne la respecterait
+  plus, y compris a posteriori.
+</p>
 
         <h2>6. Propriété intellectuelle</h2>
         <p>

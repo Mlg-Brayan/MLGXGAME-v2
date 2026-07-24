@@ -1,8 +1,13 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import CategoryListingPage from '@/components/CategoryListingPage';
 import { supabase } from '@/lib/supabaseClient';
-import Image from 'next/image';
-import Link from 'next/link';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Applications Gaming - MLGXGAME',
+  description: 'Découvrez les meilleures applications pour gamers : communication, streaming, optimisation et bien plus.',
+};
 
 export default async function ApplicationsPage() {
   const { data: apps } = await supabase.from('applications').select('*');
@@ -10,22 +15,11 @@ export default async function ApplicationsPage() {
   return (
     <main>
       <Header />
-      <div style={{ padding: '32px clamp(16px, 4vw, 48px)' }}>
-        <h1>Applications Gaming</h1>
-        <p style={{ color: 'var(--text-secondary)', marginBottom: '24px' }}>
-          {apps?.length ?? 0} application{(apps?.length ?? 0) > 1 ? 's' : ''}
-        </p>
-        <div className="showcase-grid">
-          {(apps ?? []).map((app) => (
-            <Link key={app.id} href={`/applications/${app.slug}`} className="showcase-card">
-              <div className="showcase-card-image">
-                <Image src={app.image_url} alt={app.title} fill sizes="200px" />
-              </div>
-              <span className="showcase-card-title">{app.title}</span>
-            </Link>
-          ))}
-        </div>
-      </div>
+      <p style={{ padding: '24px clamp(16px, 4vw, 48px) 0', color: 'var(--text-secondary)', maxWidth: '700px' }}>
+        Découvrez les meilleures applications pour gamers : communication, streaming, optimisation
+        et bien plus.
+      </p>
+      <CategoryListingPage items={apps ?? []} itemHrefPrefix="/applications" pageTitle="Applications Gaming" />
       <Footer />
     </main>
   );
