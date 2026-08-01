@@ -2,6 +2,7 @@ import { supabase } from '@/lib/supabaseClient';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Image from 'next/image';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import VoteButton from '@/components/VoteButton';
 
@@ -22,6 +23,13 @@ export default async function GamePage({
     notFound();
   }
 
+  const { data: similarGames } = await supabase
+    .from('games')
+    .select('*')
+    .eq('category', game.category)
+    .neq('id', game.id)
+    .limit(4);
+
   return (
     <main>
       <Header />
@@ -33,14 +41,57 @@ export default async function GamePage({
           <h1 className="detail-title">{game.title}</h1>
           <VoteButton gameId={game.id} />
         </div>
-        <span className="detail-category">{game.category}</span>
+
+        <div className="detail-tags">
+          <Link href={`/pc?category=${encodeURIComponent(game.category)}`} className="detail-tag">
+            {game.category}
+          </Link>
+          {game.platform?.map((p: string) => (
+            <span key={p} className="detail-tag detail-tag-muted">
+              {p}
+            </span>
+          ))}
+          <span className={`detail-tag ${game.is_free === false ? 'detail-tag-paid' : 'detail-tag-free'}`}>
+            {game.is_free === false ? 'Payant' : 'Gratuit'}
+          </span>
+        </div>
+
         <p className="detail-description">{game.description}</p>
-        <p className="detail-description">{game.description}</p>
-{game.external_url && (
-  <a href={game.external_url} target="_blank" rel="noopener noreferrer" className="detail-cta">
-    {game.platform?.includes('web') ? 'Jouer maintenant' : 'Télécharger / Voir le jeu'}
-  </a>
-)}
+
+        {game.external_url && (
+          <a href={game.external_url} target="_blank" rel="noopener noreferrer" className="detail-cta">
+            {game.platform?.includes('web') ? 'Jouer maintenant' : 'Télécharger / Voir le jeu'}
+          </a>
+        )}
+
+        {similarGames && similarGames.length > 0 && (
+          <div className="similar-games">
+            <h2>Jeux similaires</h2>
+            <div className="showcase-grid">
+              {similarGames.map((g) => (
+                <Link key={g.id} href={`/jeux/${g.slug}`} className="showcase-card">
+                  <div className="showcase-card-image">
+                    <Image src={g.image_url} alt={g.title} fill sizes="200px" />
+                  </div>
+                  <span className="showcase-card-title">{g.title}</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <Link
+  href={
+    game.platform?.includes('web')
+      ? '/online'
+      : game.platform?.includes('pc')
+      ? '/pc'
+      : '/mobile'
+  }
+  className="back-to-catalog"
+>
+  ← Retour au catalogue
+</Link>
       </div>
       <Footer />
     </main>
