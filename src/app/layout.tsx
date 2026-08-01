@@ -5,6 +5,8 @@ import { MenuProvider } from '@/context/MenuContext';
 import SidePanel from '@/components/SidePanel';
 import SideNav from '@/components/SideNav';
 import BottomNav from '@/components/BottomNav';
+import { ChatProvider } from '@/context/ChatContext';
+import ChatWidget from '@/components/ChatWidget';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,11 +31,14 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
-        <MenuProvider>
-          <SideNav />
-          {children}
-          <BottomNav />
-          <SidePanel />
+       <MenuProvider>
+         <ChatProvider>
+           <SideNav />
+           {children}
+           <BottomNav />
+           <SidePanel />
+           <ChatWidget />
+         </ChatProvider>
         </MenuProvider>
       </body>
     </html>

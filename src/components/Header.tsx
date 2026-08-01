@@ -3,8 +3,10 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { Bot } from 'lucide-react';
 import { supabase } from '@/lib/supabaseClient';
 import { useMenu } from '@/context/MenuContext';
+import { useChat } from '@/context/ChatContext';
 
 type Result = {
   id: number;
@@ -16,6 +18,7 @@ type Result = {
 
 export default function Header() {
  const { menuOpen, setMenuOpen } = useMenu();
+ const { setChatOpen } = useChat();
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<Result[]>([]);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -128,7 +131,9 @@ export default function Header() {
 
         <div className="header-actions">
           <a href="/connexion" className="auth-btn">Se connecter</a>
-          <button className="icon-btn" aria-label="Assistant IA">🤖</button>
+          <button className="icon-btn" aria-label="Assistant IA" onClick={() => setChatOpen(true)}>
+  <Bot size={22} strokeWidth={1.75} />
+</button>
         </div>
       </header>
     </>
