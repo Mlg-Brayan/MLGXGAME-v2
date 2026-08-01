@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useChat } from '@/context/ChatContext';
+import { getUserIdentifier } from '@/lib/getUserIdentifier';
 
 type Message = {
   from: 'user' | 'bot';
@@ -36,7 +37,7 @@ export default function ChatWidget() {
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: userMessage }),
+        body: JSON.stringify({ message: userMessage, userId: getUserIdentifier() }),
       });
       const data = await res.json();
       setMessages((prev) => [...prev, { from: 'bot', text: data.reply, suggestions: data.suggestions }]);
