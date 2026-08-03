@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useChat } from '@/context/ChatContext';
+import { supabase } from '@/lib/supabaseClient';
 import { getUserIdentifier } from '@/lib/getUserIdentifier';
 
 type Message = {
@@ -18,11 +19,22 @@ export default function ChatWidget() {
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const [username, setUsername] = useState<string | null>(null);
   const endRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => {
+      const name = data.user?.user_metadata?.username || data.user?.email?.split('@')[0];
+      if (name) {
+        setUsername(name);
+        setMessages([{ from: 'bot', text: `Salut ${name} ! Dis-moi ce que tu cherches et je m'occupe du reste.` }]);
+      }
+    });
+  }, []);
 
   if (!chatOpen) return null;
 
@@ -37,7 +49,11 @@ export default function ChatWidget() {
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: userMessage, userId: getUserIdentifier() }),
+        body: JSON.stringify({
+          message: userMessage,
+          userId: getUserIdentifier(),
+          username,
+        }),
       });
       const data = await res.json();
       setMessages((prev) => [...prev, { from: 'bot', text: data.reply, suggestions: data.suggestions }]);

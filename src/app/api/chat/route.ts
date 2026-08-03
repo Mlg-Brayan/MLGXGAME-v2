@@ -6,7 +6,7 @@ const MAX_REQUESTS_PER_MINUTE_GLOBAL = 25;
 
 export async function POST(request: Request) {
   try {
-    const { message, userId } = await request.json();
+    const { message, userId, username } = await request.json();
     const oneMinuteAgo = new Date(Date.now() - 60000).toISOString();
 
     const { count: globalCount } = await supabase
@@ -56,10 +56,13 @@ export async function POST(request: Request) {
       .map((item) => `[${item.type}] ${item.title} | slug: ${item.slug} | ${item.category}`)
       .join('\n');
 
+    const userContext = username ? `Le visiteur est connecté et s'appelle ${username}. Tu peux t'adresser à lui par son prénom naturellement, sans le sur-utiliser.` : `Le visiteur n'est pas connecté, ne suppose pas son nom.`;
     const systemPrompt = `Tu es l'assistant du site MLGXGAME. Le site propose 4 types de contenus : des jeux vidéo, des applications gaming, des templates web à vendre, et une boutique d'accessoires gaming.
 
 Voici le catalogue complet disponible (format : [type] Titre | slug | catégorie) :
 ${catalogSummary}
+
+${userContext}
 
 Ton rôle : comprendre l'intention du visiteur, même implicite, et proposer le bon contenu du catalogue, proactivement.
 

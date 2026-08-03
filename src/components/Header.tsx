@@ -3,10 +3,13 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Bot } from 'lucide-react';
 import { supabase } from '@/lib/supabaseClient';
 import { useMenu } from '@/context/MenuContext';
 import { useChat } from '@/context/ChatContext';
+import type { User } from '@supabase/supabase-js';
+import { syncPreferencesFromSupabase } from '@/lib/trackInteraction';
 
 type Result = {
   id: number;
@@ -17,18 +20,37 @@ type Result = {
 };
 
 export default function Header() {
- const { menuOpen, setMenuOpen } = useMenu();
- const { setChatOpen } = useChat();
+  const { menuOpen, setMenuOpen } = useMenu();
+  const { setChatOpen } = useChat();
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<Result[]>([]);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
+  const userMenuRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
+  useEffect(() => {
+  supabase.auth.getUser().then(({ data }) => {
+    setUser(data.user);
+    if (data.user) syncPreferencesFromSupabase(data.user.id);
+  });
+
+  const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
+    setUser(session?.user ?? null);
+    if (session?.user) syncPreferencesFromSupabase(session.user.id);
+  });
+
+  return () => authListener.subscription.unsubscribe();
+}, []);
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (searchRef.current && !searchRef.current.contains(e.target as Node)) {
         setShowDropdown(false);
+      }
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
+        setUserMenuOpen(false);
       }
     }
     document.addEventListener('mousedown', handleClickOutside);
@@ -70,18 +92,23 @@ export default function Header() {
     router.push(`/recherche?q=${encodeURIComponent(query.trim())}`);
   };
 
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    setUserMenuOpen(false);
+    router.push('/');
+    router.refresh();
+  };
+
+  const username = user?.user_metadata?.username || user?.email?.split('@')[0] || 'Utilisateur';
+
   return (
     <>
       <header className="site-header">
-      <button
-  className={`hamburger-btn hamburger-mobile-only ${menuOpen ? 'hamburger-active' : ''}`}
-  onClick={() => setMenuOpen(true)}
-  aria-label="Ouvrir le menu"
->
-  <span></span>
-  <span></span>
-  <span></span>
-</button>
+        <button className="hamburger-btn hamburger-mobile-only" onClick={() => setMenuOpen(true)} aria-label="Ouvrir le menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
 
         <a href="/" className="logo-link">
           <Image src="/logo.svg" alt="MLGXGAME" width={140} height={60} priority />
@@ -100,40 +127,51 @@ export default function Header() {
 
           {showDropdown && results.length > 0 && (
             <div className="search-dropdown">
-              {results.map((item) => {
-                
-                return (
+              {results.map((item) => (
                 <a
-                    key={item.type + '-' + item.id}
-                    href={'/' + item.type + '/' + item.slug}
-                    className="search-dropdown-item"
-                    onClick={() => setShowDropdown(false)}
-                  >
-                    <div className="search-dropdown-image">
-                      <Image src={item.image_url} alt={item.title} fill sizes="40px" />
-                    </div>
-                    <span>{item.title}</span>
-                  </a>
-                );
-              })}
+                  key={item.type + '-' + item.id}
+                  href={'/' + item.type + '/' + item.slug}
+                  className="search-dropdown-item"
+                  onClick={() => setShowDropdown(false)}
+                >
+                  <div className="search-dropdown-image">
+                    <Image src={item.image_url} alt={item.title} fill sizes="40px" />
+                  </div>
+                  <span>{item.title}</span>
+                </a>
+              ))}
               <a
                 href={'/recherche?q=' + encodeURIComponent(query)}
                 className="search-dropdown-more"
                 onClick={() => setShowDropdown(false)}
               >
-
                 Voir tous les résultats
-              </a>
+             </a> 
             </div>
-
+            
           )}
         </div>
 
         <div className="header-actions">
-          <a href="/connexion" className="auth-btn">Se connecter</a>
+          {user ? (
+            <div className="user-menu-wrapper" ref={userMenuRef}>
+              <button className="user-menu-trigger" onClick={() => setUserMenuOpen((prev) => !prev)}>
+                {username}
+              </button>
+              {userMenuOpen && (
+                <div className="user-menu-dropdown">
+                  <Link href="/profil" onClick={() => setUserMenuOpen(false)}>Mon profil</Link>
+                  <Link href="/favoris" onClick={() => setUserMenuOpen(false)}>Mes favoris</Link>
+                  <button onClick={handleLogout}>Se déconnecter</button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <Link href="/connexion" className="auth-btn">Se connecter</Link>
+          )}
           <button className="icon-btn" aria-label="Assistant IA" onClick={() => setChatOpen(true)}>
-  <Bot size={22} strokeWidth={1.75} />
-</button>
+            <Bot size={22} strokeWidth={1.75} />
+          </button>
         </div>
       </header>
     </>

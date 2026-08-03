@@ -1,3 +1,5 @@
+import { supabase } from './supabaseClient';
+
 const STORAGE_KEY = 'mlgxgame_category_scores';
 
 export function trackCategoryClick(category: string) {
@@ -5,8 +7,50 @@ export function trackCategoryClick(category: string) {
 
   const raw = localStorage.getItem(STORAGE_KEY);
   const scores: Record<string, number> = raw ? JSON.parse(raw) : {};
-
   scores[category] = (scores[category] ?? 0) + 1;
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(scores));
+
+  syncPreferenceToSupabase(category);
+}
+
+async function syncPreferenceToSupabase(category: string) {
+  const { data } = await supabase.auth.getUser();
+  const user = data.user;
+  if (!user) return;
+
+  const { data: existing } = await supabase
+    .from('user_preferences')
+    .select('score')
+    .eq('user_id', user.id)
+    .eq('category', category)
+    .maybeSingle();
+
+  if (existing) {
+    await supabase
+      .from('user_preferences')
+      .update({ score: existing.score + 1 })
+      .eq('user_id', user.id)
+      .eq('category', category);
+  } else {
+    await supabase
+      .from('user_preferences')
+      .insert({ user_id: user.id, category, score: 1 });
+  }
+}
+
+export async function syncPreferencesFromSupabase(userId: string) {
+  const { data } = await supabase
+    .from('user_preferences')
+    .select('category, score')
+    .eq('user_id', userId);
+
+  if (!data || data.length === 0) return;
+
+  const scores: Record<string, number> = {};
+  data.forEach((row) => {
+    scores[row.category] = row.score;
+  });
+
   localStorage.setItem(STORAGE_KEY, JSON.stringify(scores));
 }
 
