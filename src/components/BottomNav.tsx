@@ -1,19 +1,30 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Home, Gamepad2, ShoppingBag, MessageCircle, User } from 'lucide-react';
-
-const navItems = [
-  { label: 'Accueil', href: '/', icon: Home },
-  { label: 'Jeux', href: '/pc', icon: Gamepad2 },
-  { label: 'Boutique', href: '/boutique', icon: ShoppingBag },
-  { label: 'Discussion', href: '/discussion', icon: MessageCircle },
-  { label: 'Connexion', href: '/connexion', icon: User },
-];
+import { supabase } from '@/lib/supabaseClient';
 
 export default function BottomNav() {
   const pathname = usePathname();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => setIsLoggedIn(!!data.user));
+    const { data: authListener } = supabase.auth.onAuthStateChange((_e, session) => {
+      setIsLoggedIn(!!session?.user);
+    });
+    return () => authListener.subscription.unsubscribe();
+  }, []);
+
+  const navItems = [
+    { label: 'Accueil', href: '/', icon: Home },
+    { label: 'Jeux', href: '/pc', icon: Gamepad2 },
+    { label: 'Boutique', href: '/boutique', icon: ShoppingBag },
+    { label: 'Discussion', href: '/discussion', icon: MessageCircle },
+    { label: 'Profil', href: isLoggedIn ? '/profil' : '/connexion', icon: User },
+  ];
 
   return (
     <nav className="bottom-nav">

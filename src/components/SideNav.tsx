@@ -1,21 +1,32 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Home, Search, Gamepad2, ShoppingBag, User, Menu } from 'lucide-react';
 import { useMenu } from '@/context/MenuContext';
-
-const navItems = [
-  { label: 'Accueil', href: '/', icon: Home },
-  { label: 'Recherche', href: '/recherche', icon: Search },
-  { label: 'Jeux', href: '/pc', icon: Gamepad2 },
-  { label: 'Boutique', href: '/boutique', icon: ShoppingBag },
-  { label: 'Profil', href: '/connexion', icon: User },
-];
+import { supabase } from '@/lib/supabaseClient';
 
 export default function SideNav() {
   const pathname = usePathname();
   const { setMenuOpen } = useMenu();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => setIsLoggedIn(!!data.user));
+    const { data: authListener } = supabase.auth.onAuthStateChange((_e, session) => {
+      setIsLoggedIn(!!session?.user);
+    });
+    return () => authListener.subscription.unsubscribe();
+  }, []);
+
+  const navItems = [
+    { label: 'Accueil', href: '/', icon: Home },
+    { label: 'Recherche', href: '/recherche', icon: Search },
+    { label: 'Jeux', href: '/pc', icon: Gamepad2 },
+    { label: 'Boutique', href: '/boutique', icon: ShoppingBag },
+    { label: 'Profil', href: isLoggedIn ? '/profil' : '/connexion', icon: User },
+  ];
 
   return (
     <nav className="side-nav">

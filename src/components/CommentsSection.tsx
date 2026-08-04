@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import Link from 'next/link';
 import { supabase } from '@/lib/supabaseClient';
 
 type Comment = {
@@ -12,9 +13,10 @@ type Comment = {
 
 export default function CommentsSection() {
   const [comments, setComments] = useState<Comment[]>([]);
-  const [name, setName] = useState('');
   const [message, setMessage] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [userId, setUserId] = useState<string | null>(null);
+  const [username, setUsername] = useState<string>('');
 
   const loadComments = useCallback(async () => {
     const { data } = await supabase
@@ -28,19 +30,22 @@ export default function CommentsSection() {
 
   useEffect(() => {
     loadComments();
+    supabase.auth.getUser().then(({ data }) => {
+      setUserId(data.user?.id ?? null);
+      setUsername(data.user?.user_metadata?.username || data.user?.email?.split('@')[0] || '');
+    });
   }, [loadComments]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.trim() || !message.trim()) return;
+    if (!message.trim() || !userId) return;
 
     setSubmitting(true);
     const { error } = await supabase
       .from('comments')
-      .insert({ name: name.trim(), message: message.trim() });
+      .insert({ name: username, message: message.trim(), user_id: userId });
 
     if (!error) {
-      setName('');
       setMessage('');
       loadComments();
     }
@@ -51,27 +56,28 @@ export default function CommentsSection() {
     <section className="comments-section">
       <h2>Avis des joueurs</h2>
 
-      <form className="comment-form" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Votre nom"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          maxLength={40}
-          required
-        />
-        <textarea
-          placeholder="Votre avis sur le site..."
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          maxLength={300}
-          rows={3}
-          required
-        />
-        <button type="submit" disabled={submitting}>
-          {submitting ? 'Envoi...' : 'Publier'}
-        </button>
-      </form>
+      {userId ? (
+        <form className="comment-form" onSubmit={handleSubmit}>
+          <p style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
+            Connecté en tant que <strong>{username}</strong>
+          </p>
+          <textarea
+            placeholder="Votre avis sur le site..."
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            maxLength={300}
+            rows={3}
+            required
+          />
+          <button type="submit" disabled={submitting}>
+            {submitting ? 'Envoi...' : 'Publier'}
+          </button>
+        </form>
+      ) : (
+        <p style={{ color: 'var(--text-secondary)', marginBottom: '24px' }}>
+          <Link href="/connexion" style={{ color: 'var(--accent)' }}>Connecte-toi</Link> pour laisser un avis.
+        </p>
+      )}
 
       <div className="comments-list">
         {comments.length === 0 && (
