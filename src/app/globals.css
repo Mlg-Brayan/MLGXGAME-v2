@@ -1724,3 +1724,26 @@ a {
   background: var(--bg-primary);
   color: var(--accent);
 }
+.favorite-btn {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.favorite-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.favorite-btn-active {
+  color: #E35C8A;
+  border-color: #E35C8A;
+}

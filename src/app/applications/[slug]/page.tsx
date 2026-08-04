@@ -3,6 +3,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
+import FavoriteButton from '@/components/FavoriteButton';
 
 export default async function ApplicationPage({
   params,
@@ -28,7 +29,10 @@ export default async function ApplicationPage({
         <div className="detail-hero">
           <Image src={app.image_url} alt={app.title} fill sizes="900px" />
         </div>
-        <h1 className="detail-title">{app.title}</h1>
+       <div className="detail-header">
+  <h1 className="detail-title">{app.title}</h1>
+  <FavoriteButton itemType="applications" itemSlug={app.slug} itemTitle={app.title} itemImage={app.image_url} />
+</div>
         <span className="detail-category">{app.category}</span>
         <p className="detail-description">{app.description}</p>
         {app.download_url && (

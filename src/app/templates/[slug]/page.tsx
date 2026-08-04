@@ -3,6 +3,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
+import FavoriteButton from '@/components/FavoriteButton';
 
 export default async function TemplatePage({
   params,
@@ -29,9 +30,12 @@ export default async function TemplatePage({
           <Image src={template.image_url} alt={template.title} fill sizes="900px" />
         </div>
         <div className="detail-header">
-          <h1 className="detail-title">{template.title}</h1>
-          <span className="detail-price">{template.price} €</span>
-        </div>
+  <h1 className="detail-title">{template.title}</h1>
+  <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+    <span className="detail-price">{template.price} €</span>
+    <FavoriteButton itemType="templates" itemSlug={template.slug} itemTitle={template.title} itemImage={template.image_url} />
+  </div>
+</div>
         <span className="detail-category">{template.category}</span>
         <p className="detail-description">{template.description}</p>
         <div className="detail-cta-row">

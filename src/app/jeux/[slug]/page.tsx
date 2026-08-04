@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import VoteButton from '@/components/VoteButton';
+import FavoriteButton from '@/components/FavoriteButton';
 
 export default async function GamePage({
   params,
@@ -37,10 +38,13 @@ export default async function GamePage({
         <div className="detail-hero">
           <Image src={game.image_url} alt={game.title} fill sizes="900px" />
         </div>
-        <div className="detail-header">
-          <h1 className="detail-title">{game.title}</h1>
-          <VoteButton gameId={game.id} />
-        </div>
+       <div className="detail-header">
+  <h1 className="detail-title">{game.title}</h1>
+  <div style={{ display: 'flex', gap: '10px' }}>
+    <FavoriteButton itemType="jeux" itemSlug={game.slug} itemTitle={game.title} itemImage={game.image_url} />
+    <VoteButton gameId={game.id} />
+  </div>
+</div>
 
         <div className="detail-tags">
           <Link href={`/pc?category=${encodeURIComponent(game.category)}`} className="detail-tag">

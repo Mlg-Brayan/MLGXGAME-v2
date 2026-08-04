@@ -2,7 +2,7 @@ import { supabase } from '@/lib/supabaseClient';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Image from 'next/image';
-import { notFound } from 'next/navigation';
+import { notFound } from 'next/navigation';import FavoriteButton from '@/components/FavoriteButton';
 
 export default async function BoutiqueItemPage({
   params,
@@ -29,9 +29,12 @@ export default async function BoutiqueItemPage({
           <Image src={item.image_url} alt={item.title} fill sizes="900px" />
         </div>
         <div className="detail-header">
-          <h1 className="detail-title">{item.title}</h1>
-          <span className="detail-price">{item.price} €</span>
-        </div>
+  <h1 className="detail-title">{item.title}</h1>
+  <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+    <span className="detail-price">{item.price} €</span>
+    <FavoriteButton itemType="boutique" itemSlug={item.slug} itemTitle={item.title} itemImage={item.image_url} />
+  </div>
+</div>
         <span className="detail-category">{item.category}</span>
         <p className="detail-description">{item.description}</p>
         {item.affiliate_url ? (
