@@ -1845,3 +1845,57 @@ a {
 .profile-section {
   margin-top: 24px;
 }
+.report-btn {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 2px;
+}
+
+.report-btn:hover {
+  color: #E35C8A;
+}
+
+.report-done {
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.report-confirm {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 12px;
+  width: 160px;
+  z-index: 100;
+  font-size: 12px;
+}
+
+.report-confirm p {
+  margin-bottom: 8px;
+}
+
+.report-confirm-yes,
+.report-confirm-no {
+  flex: 1;
+  padding: 5px 10px;
+  border-radius: 8px;
+  border: none;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.report-confirm-yes {
+  background: #E35C8A;
+  color: white;
+}
+
+.report-confirm-no {
+  background: var(--border-color);
+  color: var(--text-primary);
+}

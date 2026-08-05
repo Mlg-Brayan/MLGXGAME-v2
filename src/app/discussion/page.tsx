@@ -6,6 +6,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { supabase } from '@/lib/supabaseClient';
 import { Trash2 } from 'lucide-react';
+import ReportButton from '@/components/ReportButton';
 
 type Post = {
   id: number;
@@ -102,19 +103,21 @@ export default function DiscussionPage() {
               <div className="comment-header">
                 <span className="comment-name">{post.username}</span>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <span className="comment-date">
-                    {new Date(post.created_at).toLocaleDateString('fr-FR')}
-                  </span>
-                  {userId === post.user_id && (
-                    <button
-                      onClick={() => handleDelete(post.id)}
-                      aria-label="Supprimer"
-                      style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-secondary)' }}
-                    >
-                      <Trash2 size={14} />
-                    </button>
-                  )}
-                </div>
+  <span className="comment-date">
+    {new Date(post.created_at).toLocaleDateString('fr-FR')}
+  </span>
+  {userId === post.user_id ? (
+    <button
+      onClick={() => handleDelete(post.id)}
+      aria-label="Supprimer"
+      style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-secondary)' }}
+    >
+      <Trash2 size={14} />
+    </button>
+  ) : (
+    userId && <ReportButton reportedUserId={post.user_id} contentType="discussion" contentId={String(post.id)} />
+  )}
+</div>
               </div>
               <p className="comment-message">{post.message}</p>
             </div>
