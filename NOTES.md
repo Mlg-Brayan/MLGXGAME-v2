@@ -1,7 +1,7 @@
 # MLGXGAME — Résumé du projet (pour reprise de contexte)
 
 ## Vue d'ensemble
-Site catalogue gaming en construction : jeux, applications gaming, templates web à vendre, boutique d'accessoires. Objectif : remplacer un ancien site statique HTML (`mlgxgame.vercel.app`) une fois terminé. Développeur : Brayan (objectif carrière : architecte IA), débutant en dev, travaille avec VS Code + Auto Save activé.
+Site catalogue gaming en construction : jeux, applications gaming, templates web à vendre, boutique d'accessoires. Objectif : remplacer un ancien site statique HTML (`mlgxgame.vercel.app`) une fois terminé. Développeur : Malonga Brayan (objectif carrière : architecte IA), débutant en dev, travaille avec VS Code + Auto Save activé. sur son telephone avec acode et termux.
 
 Dépôt GitHub : https://github.com/Mlg-Brayan/MLGXGAME-v2
 
