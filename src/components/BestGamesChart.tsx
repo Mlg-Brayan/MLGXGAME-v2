@@ -68,32 +68,27 @@ const maxVotes = Math.max(...games.map((g) => g.votes), 1);
 return (
   <section className="best-games">
     <h2>Selon vous, lequel est le meilleur jeux 2026 ? </h2>
-    <div className="best-games-layout">
-      <div className="best-games-chart">
-        {games.map((game) => (
-          <div key={game.id} className="best-games-column">
-            <span className="best-games-count">{game.votes}</span>
-            <div
-              className="best-games-bar"
-              style={{ height: `${(game.votes / maxVotes) * 140 + 10}px` }}
-            />
-            <button
-              className={`best-games-name ${votedGameId === game.id ? 'best-games-name-voted' : ''}`}
-              onClick={() => handleVote(game.id)}
-              disabled={votedGameId !== null}
-            >
-              {game.title}
-            </button>
-          </div>
-        ))}
-      </div>
-  
-      <div className="best-game-winner-card">
-        <span>🏆 Le plus voté</span>
-        <strong>{games[0].title}</strong>
-        <span>{games[0].votes} votes</span>
-      </div>
+    <div className="best-games-chart">
+      {games.map((game) => (
+        <div key={game.id} className="best-games-column">
+          <span className="best-games-count">{game.votes}</span>
+          <div
+            className="best-games-bar"
+            style={{ height: `${(game.votes / maxVotes) * 140 + 10}px` }}
+          />
+          <button
+            className={`best-games-name ${votedGameId === game.id ? 'best-games-name-voted' : ''}`}
+            onClick={() => handleVote(game.id)}
+            disabled={votedGameId !== null}
+          >
+            {game.title}
+          </button>
+        </div>
+      ))}
     </div>
+    <p className="best-game-winner">
+      🏆 Jeu le plus voté : <strong>{games[0].title}</strong> ({games[0].votes} votes)
+    </p>
   </section>
 );
 }
