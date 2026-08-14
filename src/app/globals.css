@@ -480,8 +480,11 @@ a {
   text-align: center;
   line-height: 1.25;
   width: 100%;
+  min-height: 2.7em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-
 .best-games-count {
   font-size: 14px;
   font-weight: 600;
@@ -2040,5 +2043,14 @@ a {
     display: flex;
     flex-direction: column;
     justify-content: center;
+  }
+}
+@media (min-width: 641px) {
+  .home-hero-left .game-section {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 18px;
+    padding: clamp(18px, 2vw, 24px);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
   }
 }
