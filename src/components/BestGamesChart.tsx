@@ -87,6 +87,17 @@ return (
           </div>
         ))}
       </div>
+      
+      <div className="home-hero-grid">
+  <div className="home-hero-left">
+    <GameSection title="Top Jeux PC" games={pcGames ?? []} />
+    <GameSection title="Top Jeux Mobile" games={appGames ?? []} />
+    <BestGamesChart />
+  </div>
+  <div className="home-hero-right">
+    <QuickNav />
+  </div>
+</div>
 
       <div className="best-game-winner-card">
         <span>🏆 Le plus voté</span>

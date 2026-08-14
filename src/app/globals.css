@@ -2017,15 +2017,23 @@ a {
     padding-left: 0;
     padding-right: 0;
   }
+}
 
-  .home-hero-left .game-section,
-  .home-hero-right .best-games {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 18px;
-    padding: clamp(18px, 2vw, 24px);
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
-  }
+/* Votes toujours dans un carré (mobile + desktop) */
+.best-games {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 18px;
+  padding: clamp(16px, 3vw, 24px);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+}
+
+/* Image des jeux : ne déborde jamais du carré */
+.game-card-image img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+  object-position: center;
 }
 
 /* --- Votes : chart à gauche, gagnant à droite (desktop) --- */
