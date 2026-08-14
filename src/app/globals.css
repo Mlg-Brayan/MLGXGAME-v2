@@ -454,11 +454,17 @@ a {
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  width: 90px;
-  max-width: 22%;
-  flex: 0 1 auto;
+  flex: 1 1 0;
+  min-width: 60px;
+  max-width: 110px;
 }
 
+.best-game-winner {
+  text-align: center;
+  margin-top: 24px;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
 .best-games-name {
   background: none;
   border: none;
@@ -1997,7 +2003,7 @@ a {
   .home-hero-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    align-items: start;
+    align-items: stretch;
     gap: clamp(24px, 3vw, 48px);
     padding: 0 clamp(16px, 4vw, 48px);
     margin-top: 8px;
@@ -2025,11 +2031,14 @@ a {
 }
 
 @media (min-width: 641px) {
+  .home-hero-right {
+    justify-content: space-between;
+  }
+
   .best-games {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 18px;
-    padding: clamp(16px, 3vw, 24px);
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 }
