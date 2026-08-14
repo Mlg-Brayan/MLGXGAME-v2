@@ -453,6 +453,23 @@ a {
   flex-direction: column;
   align-items: center;
   gap: 8px;
+  width: clamp(70px, 9vw, 100px);
+}
+
+.best-games-name {
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-size: clamp(11px, 1.2vw, 13px);
+  font-weight: 600;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 12px;
+  white-space: normal;
+  word-break: break-word;
+  text-align: center;
+  line-height: 1.25;
+  width: 100%;
 }
 
 .best-games-count {
@@ -466,18 +483,6 @@ a {
   background: linear-gradient(to top, var(--accent-dark), var(--accent));
   border-radius: 8px 8px 0 0;
   transition: height 0.4s ease;
-}
-
-.best-games-name {
-  background: none;
-  border: none;
-  color: var(--text-primary);
-  font-size: clamp(12px, 1.3vw, 14px);
-  font-weight: 600;
-  cursor: pointer;
-  padding: 6px 10px;
-  border-radius: 12px;
-  white-space: nowrap;
 }
 
 .best-games-name:hover:not(:disabled) {
