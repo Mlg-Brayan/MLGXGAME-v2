@@ -86,6 +86,11 @@ export default function BestGamesChart() {
           </div>
         ))}
       </div>
+      {games.length > 0 && (
+  <p className="best-game-winner">
+    🏆 Jeu le plus voté : <strong>{games[0].title}</strong> ({games[0].votes} votes)
+  </p>
+)}
     </section>
   );
 }

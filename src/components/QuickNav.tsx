@@ -1,3 +1,4 @@
+'use client';
 import Link from 'next/link';
 import { Monitor, Smartphone, LayoutTemplate, AppWindow, ShoppingBag,  MessageCircle } from 'lucide-react';
 
