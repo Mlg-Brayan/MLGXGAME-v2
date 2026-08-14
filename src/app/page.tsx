@@ -31,9 +31,9 @@ export default async function Home() {
   </div>
   <div className="home-hero-right">
     <QuickNav />
+    <BestGamesChart />
   </div>
 </div>
-  <BestGamesChart />
   <CategoryShowcase title="Jeux en ligne" items={webGames ?? []} itemHrefPrefix="/jeux" seeMoreHref="/online" iconName="globe" accentColor="#7F77DD" />
   <CategoryShowcase title="Jeux PC" items={pcGames ?? []} itemHrefPrefix="/jeux" seeMoreHref="/pc" iconName="monitor" accentColor="#4FA3E3" />
   <CategoryShowcase title="Jeux Mobile" items={appGames ?? []} itemHrefPrefix="/jeux" seeMoreHref="/mobile" iconName="smartphone" accentColor="#4FCB8F" />
