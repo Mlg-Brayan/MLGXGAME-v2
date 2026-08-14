@@ -63,11 +63,12 @@ export default function BestGamesChart() {
 
   if (loading || games.length === 0) return null;
 
-  const maxVotes = Math.max(...games.map((g) => g.votes), 1);
+const maxVotes = Math.max(...games.map((g) => g.votes), 1);
 
-  return (
-    <section className="best-games">
-     <h2>Selon vous, lequel est le meilleur jeux 2026 ? </h2>
+return (
+  <section className="best-games">
+    <h2>Selon vous, lequel est le meilleur jeux 2026 ? </h2>
+    <div className="best-games-layout">
       <div className="best-games-chart">
         {games.map((game) => (
           <div key={game.id} className="best-games-column">
@@ -86,11 +87,13 @@ export default function BestGamesChart() {
           </div>
         ))}
       </div>
-      {games.length > 0 && (
-  <p className="best-game-winner">
-    🏆 Jeu le plus voté : <strong>{games[0].title}</strong> ({games[0].votes} votes)
-  </p>
-)}
-    </section>
-  );
+
+      <div className="best-game-winner-card">
+        <span>🏆 Le plus voté</span>
+        <strong>{games[0].title}</strong>
+        <span>{games[0].votes} votes</span>
+      </div>
+    </div>
+  </section>
+);
 }

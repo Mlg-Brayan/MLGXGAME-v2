@@ -21,23 +21,31 @@ export default async function Home() {
 
   return (
     <main>
-      <SideNav />
-      <Header />
+  <SideNav />
+  <Header />
+
+  <div className="home-hero-grid">
+    <div className="home-hero-left">
       <GameSection title="Top Jeux PC" games={pcGames ?? []} />
       <GameSection title="Top Jeux Mobile" games={appGames ?? []} />
+    </div>
+    <div className="home-hero-right">
       <QuickNav />
       <BestGamesChart />
-      <CategoryShowcase title="Jeux en ligne" items={webGames ?? []} itemHrefPrefix="/jeux" seeMoreHref="/online" iconName="globe" accentColor="#7F77DD" />
-      <CategoryShowcase title="Jeux PC" items={pcGames ?? []} itemHrefPrefix="/jeux" seeMoreHref="/pc" iconName="monitor" accentColor="#4FA3E3" />
-      <CategoryShowcase title="Jeux Mobile" items={appGames ?? []} itemHrefPrefix="/jeux" seeMoreHref="/mobile" iconName="smartphone" accentColor="#4FCB8F" />
-      <CategoryShowcase title="Applications Gaming" items={applications ?? []} itemHrefPrefix="/applications" seeMoreHref="/applications" iconName="appwindow" accentColor="#E3A64F" />
-      <CategoryShowcase title="Templates Web" items={templates ?? []} itemHrefPrefix="/templates" seeMoreHref="/templates" iconName="template" accentColor="#E35C8A" />
-      <CategoryShowcase title="Boutique" items={boutique ?? []} itemHrefPrefix="/boutique" seeMoreHref="/boutique" iconName="shop" accentColor="#B565E0" />
-      <RecommendedSection />
-      <AboutSection />
-      <CommentsSection />
-      <Footer />
-      <BottomNav />
-    </main>
+    </div>
+  </div>
+
+  <CategoryShowcase title="Jeux en ligne" items={webGames ?? []} itemHrefPrefix="/jeux" seeMoreHref="/online" iconName="globe" accentColor="#7F77DD" />
+  <CategoryShowcase title="Jeux PC" items={pcGames ?? []} itemHrefPrefix="/jeux" seeMoreHref="/pc" iconName="monitor" accentColor="#4FA3E3" />
+  <CategoryShowcase title="Jeux Mobile" items={appGames ?? []} itemHrefPrefix="/jeux" seeMoreHref="/mobile" iconName="smartphone" accentColor="#4FCB8F" />
+  <CategoryShowcase title="Applications Gaming" items={applications ?? []} itemHrefPrefix="/applications" seeMoreHref="/applications" iconName="appwindow" accentColor="#E3A64F" />
+  <CategoryShowcase title="Templates Web" items={templates ?? []} itemHrefPrefix="/templates" seeMoreHref="/templates" iconName="template" accentColor="#E35C8A" />
+  <CategoryShowcase title="Boutique" items={boutique ?? []} itemHrefPrefix="/boutique" seeMoreHref="/boutique" iconName="shop" accentColor="#B565E0" />
+  <RecommendedSection />
+  <AboutSection />
+  <CommentsSection />
+  <Footer />
+  <BottomNav />
+</main>
   );
 }
