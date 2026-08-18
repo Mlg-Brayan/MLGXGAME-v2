@@ -26,10 +26,10 @@ export default async function Home() {
   <div className="home-hero-grid">
     <div className="home-hero-left">
       <GameSection title="Top Jeux PC" games={pcGames ?? []} />
-        <QuickNav />
+      <GameSection title="Top Jeux Mobile" games={appGames ?? []} />      
     </div>
     <div className="home-hero-right">
-      <GameSection title="Top Jeux Mobile" games={appGames ?? []} />
+      <QuickNav />
       <BestGamesChart />
     </div>
   </div>
