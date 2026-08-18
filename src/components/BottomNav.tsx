@@ -20,7 +20,7 @@ export default function BottomNav() {
 
   const navItems = [
     { label: 'Accueil', href: '/', icon: Home },
-    { label: 'Jeux', href: '/pc', icon: Gamepad2 },
+    { label: 'Jeux', href: '/jeux', icon: Gamepad2 },
     { label: 'Boutique', href: '/boutique', icon: ShoppingBag },
     { label: 'Discussion', href: '/discussion', icon: MessageCircle },
     { label: 'Profil', href: isLoggedIn ? '/profil' : '/connexion', icon: User },

@@ -23,7 +23,7 @@ export default function SideNav() {
   const navItems = [
     { label: 'Accueil', href: '/', icon: Home },
     { label: 'Recherche', href: '/recherche', icon: Search },
-    { label: 'Jeux', href: '/pc', icon: Gamepad2 },
+    { label: 'Jeux', href: '/jeux', icon: Gamepad2 },
     { label: 'Boutique', href: '/boutique', icon: ShoppingBag },
     { label: 'Profil', href: isLoggedIn ? '/profil' : '/connexion', icon: User },
   ];
