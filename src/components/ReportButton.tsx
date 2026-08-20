@@ -25,33 +25,37 @@ export default function ReportButton({ reportedUserId, contentType, contentId }:
   const [submitting, setSubmitting] = useState(false);
 
   const handleReport = async () => {
-    if (!selectedReason) return;
+  if (!selectedReason) return;
 
-    const { data: authData } = await supabase.auth.getUser();
-    const user = authData.user;
-    if (!user) return;
+  const { data: authData } = await supabase.auth.getUser();
+  const user = authData.user;
+  if (!user) return;
 
-    setSubmitting(true);
+  setSubmitting(true);
 
-    const { error } = await supabase.from('reports').insert({
-      reported_user_id: reportedUserId,
-      reporter_id: user.id,
-      content_type: contentType,
-      content_id: contentId,
-      reason: selectedReason,
+  const { error } = await supabase.from('reports').insert({
+    reported_user_id: reportedUserId,
+    reporter_id: user.id,
+    content_type: contentType,
+    content_id: contentId,
+    reason: selectedReason,
+  });
+
+  setSubmitting(false);
+
+  if (!error) {
+    setReported(true);
+    setShowConfirm(false);
+    fetch('/api/notify-report', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ reportedUserId }),
     });
-
-    setSubmitting(false);
-
-    if (!error) {
-      setReported(true);
-      setShowConfirm(false);
-    } else if (error.code === '23505') {
-      // Déjà signalé par cet utilisateur (contrainte unique)
-      setReported(true);
-      setShowConfirm(false);
-    }
-  };
+  } else if (error.code === '23505') {
+    setReported(true);
+    setShowConfirm(false);
+  }
+};
 
   if (reported) {
     return <span className="report-done">Signalé</span>;

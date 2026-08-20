@@ -15,24 +15,39 @@ export default function LoginPage() {
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-    setLoading(true);
+  e.preventDefault();
+  setError('');
+  setLoading(true);
 
-    const { error: signInError } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+  const { error: signInError } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
 
-    if (signInError) {
-      setError('Email ou mot de passe incorrect.');
-      setLoading(false);
-      return;
-    }
+  if (signInError) {
+    setError('Email ou mot de passe incorrect.');
+    setLoading(false);
+    return;
+  }
 
-    router.push('/');
-    router.refresh();
-  };
+  // Vérification de bannissement
+  const banCheck = await fetch('/api/check-ban', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email }),
+  });
+  const banData = await banCheck.json();
+
+  if (banData.banned) {
+    await supabase.auth.signOut();
+    setError('Ce compte a été banni : ' + banData.reason);
+    setLoading(false);
+    return;
+  }
+
+  router.push('/');
+  router.refresh();
+};
 
   return (
     <main>
