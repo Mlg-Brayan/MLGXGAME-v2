@@ -16,28 +16,50 @@ export default function SignUpPage() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-    setLoading(true);
+ const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setError('');
+  setLoading(true);
 
-    const { error: signUpError } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: { username },
-      },
-    });
+  const trimmedUsername = username.trim();
 
-    if (signUpError) {
-      setError(signUpError.message);
-      setLoading(false);
-      return;
-    }
+  // Vérifie si le pseudo est déjà pris
+  const { data: existing } = await supabase
+    .from('profiles')
+    .select('id')
+    .ilike('username', trimmedUsername)
+    .maybeSingle();
 
-    setSuccess(true);
+  if (existing) {
+    setError('Ce pseudo est déjà pris.');
     setLoading(false);
-  };
+    return;
+  }
+
+  const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      data: { username: trimmedUsername },
+    },
+  });
+
+  if (signUpError) {
+    setError(signUpError.message);
+    setLoading(false);
+    return;
+  }
+
+  if (signUpData.user) {
+    await supabase.from('profiles').insert({
+      id: signUpData.user.id,
+      username: trimmedUsername,
+    });
+  }
+
+  setSuccess(true);
+  setLoading(false);
+};
 
   if (success) {
     return (
