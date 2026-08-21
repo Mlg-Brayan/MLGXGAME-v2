@@ -1043,13 +1043,17 @@ a {
     justify-content: space-around;
     align-items: center;
     position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: var(--bg-card);
-    border-top: 1px solid var(--border-color);
-    padding: 10px 4px;
+    bottom: 14px;
+    left: 14px;
+    right: 14px;
+    background: rgba(26, 26, 26, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    padding: 10px 8px;
     z-index: 150;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
   }
 
   .bottom-nav-item {
@@ -1058,15 +1062,19 @@ a {
     align-items: center;
     gap: 3px;
     color: var(--text-secondary);
-    font-size: 10px;
+    font-size: 9px;
+    padding: 6px 10px;
+    border-radius: 14px;
+    transition: background 0.2s, color 0.2s;
   }
 
   .bottom-nav-active {
     color: var(--accent);
+    background: rgba(127, 119, 221, 0.15);
   }
 
   body {
-    padding-bottom: 64px;
+    padding-bottom: 90px;
   }
 }
 .side-nav {
@@ -2015,9 +2023,10 @@ a {
   .home-hero-left,
   .home-hero-right {
     min-width: 0;
-    display: flex;
-    flex-direction: column;
-    gap: clamp(20px, 2.5vw, 32px);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(14px, 2vw, 20px);
+    align-items: start;
   }
 
   .home-hero-grid .game-section,
@@ -2025,6 +2034,17 @@ a {
   .home-hero-grid .best-games {
     padding-left: 0;
     padding-right: 0;
+  }
+
+  .home-hero-right {
+    justify-content: space-between;
+  }
+
+  .best-games {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 }
 
@@ -2077,4 +2097,113 @@ a {
   color: var(--text-secondary);
   font-size: clamp(14px, 1.5vw, 16px);
   max-width: 400px;
+}
+.detail-stats {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.detail-stat {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+.hero {
+  display: flex;
+  align-items: center;
+  gap: clamp(24px, 4vw, 56px);
+  padding: clamp(32px, 5vw, 56px) clamp(16px, 4vw, 48px);
+}
+
+.hero-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.hero-tag {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.hero-title {
+  font-size: clamp(28px, 4.5vw, 44px);
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 16px;
+}
+
+.hero-title-accent {
+  color: var(--accent);
+}
+
+.hero-text {
+  font-size: clamp(14px, 1.6vw, 16px);
+  color: var(--text-secondary);
+  max-width: 440px;
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.hero-cta-primary,
+.hero-cta-secondary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: 24px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.hero-cta-primary {
+  background: var(--accent);
+  color: var(--bg-primary);
+}
+
+.hero-cta-primary:hover {
+  background: var(--accent-dark);
+  color: var(--text-primary);
+}
+
+.hero-cta-secondary {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.hero-cta-secondary:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.hero-image {
+  position: relative;
+  flex: 1;
+  max-width: 460px;
+  aspect-ratio: 4 / 3;
+  border-radius: 24px;
+  overflow: hidden;
+  display: none;
+}
+
+.hero-image img {
+  object-fit: cover;
+}
+
+@media (min-width: 641px) {
+  .hero-image {
+    display: block;
+  }
 }

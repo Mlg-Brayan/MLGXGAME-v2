@@ -10,6 +10,7 @@ import CommentsSection from '@/components/CommentsSection';
 import RecommendedSection from '@/components/RecommendedSection';
 import BottomNav from '@/components/BottomNav';
 import SideNav from '@/components/SideNav';
+import Hero from '@/components/Hero';
 
 export default async function Home() {
   const { data: pcGames } = await supabase.from('games').select('*').contains('platform', ['pc']);
@@ -23,6 +24,7 @@ export default async function Home() {
     <main>
   <SideNav />
   <Header />
+  <Hero />
   <div className="home-hero-grid">
     <div className="home-hero-left">
       <GameSection title="Top Jeux PC" games={pcGames ?? []} />

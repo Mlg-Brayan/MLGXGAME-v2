@@ -4,6 +4,33 @@ import Footer from '@/components/Footer';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import FavoriteButton from '@/components/FavoriteButton';
+import type { Metadata } from 'next';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+
+  const { data: template } = await supabase
+    .from('templates')
+    .select('title, description, image_url, price')
+    .eq('slug', slug)
+    .single();
+
+  if (!template) return { title: 'Template introuvable' };
+
+  return {
+    title: template.title,
+    description: template.description?.slice(0, 160) ?? `Découvre ${template.title} sur MLGXGAME.`,
+    openGraph: {
+      title: `${template.title} - ${template.price} €`,
+      description: template.description?.slice(0, 160) ?? '',
+      images: template.image_url ? [{ url: template.image_url }] : [],
+    },
+  };
+}
 
 export default async function TemplatePage({
   params,

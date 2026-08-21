@@ -4,6 +4,33 @@ import Footer from '@/components/Footer';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import FavoriteButton from '@/components/FavoriteButton';
+import type { Metadata } from 'next';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+
+  const { data: app } = await supabase
+    .from('applications')
+    .select('title, description, image_url')
+    .eq('slug', slug)
+    .single();
+
+  if (!app) return { title: 'Application introuvable' };
+
+  return {
+    title: app.title,
+    description: app.description?.slice(0, 160) ?? `Découvre ${app.title} sur MLGXGAME.`,
+    openGraph: {
+      title: app.title,
+      description: app.description?.slice(0, 160) ?? '',
+      images: app.image_url ? [{ url: app.image_url }] : [],
+    },
+  };
+}
 
 export default async function ApplicationPage({
   params,

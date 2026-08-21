@@ -6,6 +6,33 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import VoteButton from '@/components/VoteButton';
 import FavoriteButton from '@/components/FavoriteButton';
+import type { Metadata } from 'next';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+
+  const { data: game } = await supabase
+    .from('games')
+    .select('title, description, image_url, category')
+    .eq('slug', slug)
+    .single();
+
+  if (!game) return { title: 'Jeu introuvable' };
+
+  return {
+    title: game.title,
+    description: game.description?.slice(0, 160) ?? `Découvre ${game.title} sur MLGXGAME.`,
+    openGraph: {
+      title: game.title,
+      description: game.description?.slice(0, 160) ?? '',
+      images: game.image_url ? [{ url: game.image_url }] : [],
+    },
+  };
+}
 
 export default async function GamePage({
   params,
@@ -60,7 +87,16 @@ export default async function GamePage({
           </span>
         </div>
 
-        <p className="detail-description">{game.description}</p>
+        <div className="detail-stats">
+  {game.rating && (
+    <span className="detail-stat">⭐ {game.rating}/5</span>
+  )}
+  {game.player_count && (
+    <span className="detail-stat">👥 {game.player_count}</span>
+  )}
+</div>
+
+<p className="detail-description">{game.description}</p>
 
         {game.external_url && (
           <a href={game.external_url} target="_blank" rel="noopener noreferrer" className="detail-cta">

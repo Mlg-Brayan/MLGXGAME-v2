@@ -22,12 +22,32 @@ export async function POST(request: Request) {
     .eq('reported_user_id', reportedUserId);
 
   if (count !== null && count >= 3) {
+    // Vérifie s'il n'est pas déjà banni (temporairement ou définitivement)
+    const { data: alreadyBanned } = await supabaseAdmin
+      .from('banned_users')
+      .select('id')
+      .eq('user_id', reportedUserId)
+      .maybeSingle();
+
+    if (!alreadyBanned) {
+      const { data: targetUser } = await supabaseAdmin.auth.admin.getUserById(reportedUserId);
+      const suspensionEnd = new Date(Date.now() + 48 * 60 * 60 * 1000); // 48h
+
+      await supabaseAdmin.from('banned_users').insert({
+        user_id: reportedUserId,
+        email: targetUser?.user?.email ?? null,
+        reason: 'Suspension automatique de 48h - 3 signalements en attente de revue',
+        banned_until: suspensionEnd.toISOString(),
+      });
+    }
+
     await resend.emails.send({
       from: 'MLGXGAME <onboarding@resend.dev>',
       to: process.env.ADMIN_EMAIL!,
-      subject: `⚠️ Utilisateur signalé ${count} fois`,
-      html: `<p>Un utilisateur a été signalé <strong>${count} fois</strong>.</p>
+      subject: `⚠️ Utilisateur suspendu 48h (${count} signalements)`,
+      html: `<p>Un utilisateur a été <strong>automatiquement suspendu 48h</strong> après ${count} signalements.</p>
              <p>ID utilisateur : ${reportedUserId}</p>
+             <p>Vérifie et décide : bannissement permanent ou levée de la suspension.</p>
              <p><a href="${process.env.NEXT_PUBLIC_SITE_URL}/admin/reports">Voir dans le panel admin</a></p>`,
     });
   }

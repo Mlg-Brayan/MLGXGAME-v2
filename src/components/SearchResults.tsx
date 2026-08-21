@@ -14,7 +14,23 @@ type Item = {
   type: string;
 };
 
-export default function SearchResults({ query, results }: { query: string; results: Item[] }) {
+type Filters = {
+  platform?: string;
+  genre?: string;
+  price?: string;
+};
+
+export default function SearchResults({
+  query,
+  results,
+  genres,
+  activeFilters,
+}: {
+  query: string;
+  results: Item[];
+  genres: string[];
+  activeFilters: Filters;
+}) {
   const [history, setHistory] = useState<string[]>([]);
   const router = useRouter();
 
@@ -28,6 +44,16 @@ export default function SearchResults({ query, results }: { query: string; resul
   const handleClearHistory = () => {
     clearHistory();
     setHistory([]);
+  };
+
+  const updateFilter = (key: keyof Filters, value: string) => {
+    const params = new URLSearchParams();
+    params.set('q', query);
+    const next = { ...activeFilters, [key]: activeFilters[key] === value ? undefined : value };
+    if (next.platform) params.set('platform', next.platform);
+    if (next.genre) params.set('genre', next.genre);
+    if (next.price) params.set('price', next.price);
+    router.push(`/recherche?${params.toString()}`);
   };
 
   if (query.length === 0) {
@@ -67,9 +93,42 @@ export default function SearchResults({ query, results }: { query: string; resul
   return (
     <div style={{ padding: '32px clamp(16px, 4vw, 48px)' }}>
       <h1>Résultats pour &quot;{query}&quot;</h1>
-      <p style={{ color: 'var(--text-secondary)', marginBottom: '24px' }}>
+      <p style={{ color: 'var(--text-secondary)', marginBottom: '16px' }}>
         {results.length} résultat{results.length > 1 ? 's' : ''}
       </p>
+
+      <div className="filter-chips" style={{ position: 'static', marginBottom: '24px' }}>
+        {['pc', 'android', 'ios', 'web'].map((p) => (
+          <button
+            key={p}
+            className={`filter-chip ${activeFilters.platform === p ? 'filter-chip-active' : ''}`}
+            onClick={() => updateFilter('platform', p)}
+          >
+            {p.toUpperCase()}
+          </button>
+        ))}
+        <button
+          className={`filter-chip ${activeFilters.price === 'free' ? 'filter-chip-active' : ''}`}
+          onClick={() => updateFilter('price', 'free')}
+        >
+          Gratuit
+        </button>
+        <button
+          className={`filter-chip ${activeFilters.price === 'paid' ? 'filter-chip-active' : ''}`}
+          onClick={() => updateFilter('price', 'paid')}
+        >
+          Payant
+        </button>
+        {genres.map((g) => (
+          <button
+            key={g}
+            className={`filter-chip ${activeFilters.genre === g ? 'filter-chip-active' : ''}`}
+            onClick={() => updateFilter('genre', g)}
+          >
+            {g}
+          </button>
+        ))}
+      </div>
 
       <div className="showcase-grid">
         {results.map((item) => (

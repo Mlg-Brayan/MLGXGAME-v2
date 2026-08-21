@@ -15,13 +15,19 @@ export async function POST(request: Request) {
 
   const { data } = await supabaseAdmin
     .from('banned_users')
-    .select('reason')
+    .select('id, reason, banned_until')
     .eq('email', email)
     .maybeSingle();
 
-  if (data) {
-    return NextResponse.json({ banned: true, reason: data.reason });
+  if (!data) {
+    return NextResponse.json({ banned: false });
   }
 
-  return NextResponse.json({ banned: false });
+  // Suspension temporaire expirée : on la lève automatiquement
+  if (data.banned_until && new Date(data.banned_until) < new Date()) {
+    await supabaseAdmin.from('banned_users').delete().eq('id', data.id);
+    return NextResponse.json({ banned: false });
+  }
+
+  return NextResponse.json({ banned: true, reason: data.reason });
 }

@@ -3,6 +3,33 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';import FavoriteButton from '@/components/FavoriteButton';
+import type { Metadata } from 'next';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+
+  const { data: item } = await supabase
+    .from('boutique')
+    .select('title, description, image_url, price')
+    .eq('slug', slug)
+    .single();
+
+  if (!item) return { title: 'Produit introuvable' };
+
+  return {
+    title: item.title,
+    description: item.description?.slice(0, 160) ?? `Découvre ${item.title} sur MLGXGAME.`,
+    openGraph: {
+      title: `${item.title} - ${item.price} €`,
+      description: item.description?.slice(0, 160) ?? '',
+      images: item.image_url ? [{ url: item.image_url }] : [],
+    },
+  };
+}
 
 export default async function BoutiqueItemPage({
   params,
