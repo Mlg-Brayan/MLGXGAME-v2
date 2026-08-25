@@ -14,9 +14,19 @@ export default function SignUpPage() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
-
+  const isPasswordStrong = (pwd: string) => {
+  const hasMinLength = pwd.length >= 8;
+  const hasUppercase = /[A-Z]/.test(pwd);
+  const hasNumber = /[0-9]/.test(pwd);
+  const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>_\-+=]/.test(pwd);
+  return hasMinLength && hasUppercase && hasNumber && hasSpecialChar;
+};
  const handleSubmit = async (e: React.FormEvent) => {
+  if (!isPasswordStrong(password)) {
+  setError('Le mot de passe doit contenir au moins 8 caractères, une majuscule, un chiffre et un caractère spécial (!@#$%...).');
+  setLoading(false);
+  return;
+}
   e.preventDefault();
   setError('');
   setLoading(true);
@@ -96,7 +106,7 @@ export default function SignUpPage() {
           />
           <input
             type="password"
-            placeholder="Mot de passe (6 caractères min.)"
+            placeholder="Mot de passe (8+ car., 1 majuscule, 1 chiffre, 1 spécial)"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             minLength={6}
