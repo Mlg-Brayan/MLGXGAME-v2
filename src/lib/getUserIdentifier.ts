@@ -1,5 +1,5 @@
 export function getUserIdentifier(): string {
-  const key = 'mlgxgame_user_id';
+  const key = 'MLGxGame_user_id';
   let id = localStorage.getItem(key);
 
   if (!id) {

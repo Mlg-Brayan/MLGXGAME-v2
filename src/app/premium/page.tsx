@@ -4,8 +4,8 @@ import { Crown } from 'lucide-react';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Premium - MLGXGAME',
-  description: 'La section Premium arrive bientôt sur MLGXGAME.',
+  title: 'Premium - MLGxGame',
+  description: 'La section Premium arrive bientôt sur MLGxGame.',
 };
 
 export default function PremiumPage() {

@@ -1,6 +1,6 @@
 import { supabase } from './supabaseClient';
 
-const STORAGE_KEY = 'mlgxgame_category_scores';
+const STORAGE_KEY = 'MLGxGame_category_scores';
 
 export function trackCategoryClick(category: string) {
   if (typeof window === 'undefined' || !category) return;

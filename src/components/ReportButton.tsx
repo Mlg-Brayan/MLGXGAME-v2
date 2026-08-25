@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Flag } from 'lucide-react';
 import { supabase } from '@/lib/supabaseClient';
 
@@ -24,38 +24,57 @@ export default function ReportButton({ reportedUserId, contentType, contentId }:
   const [selectedReason, setSelectedReason] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
+  useEffect(() => {
+    const checkIfReported = async () => {
+      const { data: authData } = await supabase.auth.getUser();
+      const user = authData.user;
+      if (!user) return;
+
+      const { data } = await supabase
+        .from('reports')
+        .select('id')
+        .eq('reporter_id', user.id)
+        .eq('content_type', contentType)
+        .eq('content_id', contentId)
+        .maybeSingle();
+
+      if (data) setReported(true);
+    };
+    checkIfReported();
+  }, [contentType, contentId]);
+
   const handleReport = async () => {
-  if (!selectedReason) return;
+    if (!selectedReason) return;
 
-  const { data: authData } = await supabase.auth.getUser();
-  const user = authData.user;
-  if (!user) return;
+    const { data: authData } = await supabase.auth.getUser();
+    const user = authData.user;
+    if (!user) return;
 
-  setSubmitting(true);
+    setSubmitting(true);
 
-  const { error } = await supabase.from('reports').insert({
-    reported_user_id: reportedUserId,
-    reporter_id: user.id,
-    content_type: contentType,
-    content_id: contentId,
-    reason: selectedReason,
-  });
-
-  setSubmitting(false);
-
-  if (!error) {
-    setReported(true);
-    setShowConfirm(false);
-    fetch('/api/notify-report', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ reportedUserId }),
+    const { error } = await supabase.from('reports').insert({
+      reported_user_id: reportedUserId,
+      reporter_id: user.id,
+      content_type: contentType,
+      content_id: contentId,
+      reason: selectedReason,
     });
-  } else if (error.code === '23505') {
-    setReported(true);
-    setShowConfirm(false);
-  }
-};
+
+    setSubmitting(false);
+
+    if (!error) {
+      setReported(true);
+      setShowConfirm(false);
+      fetch('/api/notify-report', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ reportedUserId }),
+      });
+    } else if (error.code === '23505') {
+      setReported(true);
+      setShowConfirm(false);
+    }
+  };
 
   if (reported) {
     return <span className="report-done">Signalé</span>;

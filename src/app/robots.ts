@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: '/admin/',
     },
-    sitemap: 'https://mlgxgame-v2.vercel.app/sitemap.xml',
+    sitemap: 'https://MLGxGame-v2.vercel.app/sitemap.xml',
   };
 }

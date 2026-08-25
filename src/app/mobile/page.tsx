@@ -5,7 +5,7 @@ import { supabase } from '@/lib/supabaseClient';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Jeux Mobile - MLGXGAME',
+  title: 'Jeux Mobile - MLGxGame',
   description: 'Découvrez notre sélection de jeux mobile sur Android et iOS, gratuits ou payants, pour tous les styles de joueurs.',
 };
 

@@ -57,7 +57,7 @@ export async function POST(request: Request) {
       .join('\n');
 
     const userContext = username ? `Le visiteur est connecté et s'appelle ${username}. Tu peux t'adresser à lui par son prénom naturellement, sans le sur-utiliser.` : `Le visiteur n'est pas connecté, ne suppose pas son nom.`;
-    const systemPrompt = `Tu es l'assistant du site MLGXGAME. Le site propose 4 types de contenus : des jeux vidéo, des applications gaming, des templates web à vendre, et une boutique d'accessoires gaming.
+    const systemPrompt = `Tu es l'assistant du site MLGxGame. Le site propose 4 types de contenus : des jeux vidéo, des applications gaming, des templates web à vendre, et une boutique d'accessoires gaming.
 
 Voici le catalogue complet disponible (format : [type] Titre | slug | catégorie) :
 ${catalogSummary}

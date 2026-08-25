@@ -2,7 +2,7 @@ import { supabase } from '@/lib/supabaseClient';
 import type { MetadataRoute } from 'next';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://mlgxgame-v2.vercel.app';
+  const baseUrl = 'https://MLGxGame-v2.vercel.app';
 
   const { data: games } = await supabase.from('games').select('slug');
   const { data: applications } = await supabase.from('applications').select('slug');

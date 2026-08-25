@@ -5,7 +5,7 @@ import { supabase } from '@/lib/supabaseClient';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Applications Gaming - MLGXGAME',
+  title: 'Applications Gaming - MLGxGame',
   description: 'Découvrez les meilleures applications pour gamers : communication, streaming, optimisation et bien plus.',
 };
 

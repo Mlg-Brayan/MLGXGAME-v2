@@ -5,7 +5,7 @@ import { supabase } from '@/lib/supabaseClient';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Boutique Gaming - MLGXGAME',
+  title: 'Boutique Gaming - MLGxGame',
   description: 'Manettes, casques, souris et accessoires gaming sélectionnés pour améliorer votre expérience de jeu.',
 };
 

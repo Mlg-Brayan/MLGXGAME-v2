@@ -5,7 +5,7 @@ import { supabase } from '@/lib/supabaseClient';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Templates Web - MLGXGAME',
+  title: 'Templates Web - MLGxGame',
   description: 'Des templates web prêts à l\'emploi pour lancer votre projet rapidement : portfolio, e-commerce, blog et plus.',
 };
 

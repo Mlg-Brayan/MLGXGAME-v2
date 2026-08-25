@@ -67,7 +67,7 @@ export default function ChatWidget() {
   return (
     <div className="chat-widget">
       <div className="chat-widget-header">
-        <span>Assistant MLGXGAME</span>
+        <span>Assistant MLGxGame</span>
         <button onClick={() => setChatOpen(false)} aria-label="Fermer le chat">✕</button>
       </div>
 

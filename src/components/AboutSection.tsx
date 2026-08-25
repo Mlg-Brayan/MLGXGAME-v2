@@ -5,7 +5,7 @@ export default function AboutSection() {
         <span className="about-badge">Notre mission</span>
         <h2>Le gaming, réuni en un seul endroit</h2>
         <p>
-          MLGXGAME est une plateforme née de la passion du jeu vidéo, pensée pour rassembler en un seul endroit
+          MLGxGame est une plateforme née de la passion du jeu vidéo, pensée pour rassembler en un seul endroit
           les meilleurs jeux disponible sur PC, mobile et navigateur. Notre mission est simple : offrir aux joueurs
           un catalogue fiable, à jour, et sans détour, tout en construisant une communauté active autour du gaming.
         </p>

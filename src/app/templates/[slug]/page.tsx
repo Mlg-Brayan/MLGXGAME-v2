@@ -23,7 +23,7 @@ export async function generateMetadata({
 
   return {
     title: template.title,
-    description: template.description?.slice(0, 160) ?? `Découvre ${template.title} sur MLGXGAME.`,
+    description: template.description?.slice(0, 160) ?? `Découvre ${template.title} sur MLGxGame.`,
     openGraph: {
       title: `${template.title} - ${template.price} €`,
       description: template.description?.slice(0, 160) ?? '',

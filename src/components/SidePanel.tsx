@@ -69,7 +69,7 @@ export default function SidePanel() {
               Se connecter
             </a>
           )}
-          <Image src="/logo.svg" alt="MLGXGAME" width={100} height={42} />
+          <Image src="/logo.svg" alt="MLGxGame" width={100} height={42} />
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-const KEY = 'mlgxgame_search_history';
+const KEY = 'MLGxGame_search_history';
 
 export function addToHistory(query: string) {
   if (typeof window === 'undefined' || !query.trim()) return;

@@ -13,7 +13,7 @@ export default function PrivacyPolicyPage() {
 
         <h2>1. Qui sommes-nous</h2>
         <p>
-          MLGXGAME est un site édité par un particulier, opéré depuis les États-Unis. Pour toute question
+          MLGxGame est un site édité par un particulier, opéré depuis les États-Unis. Pour toute question
           concernant cette politique, vous pouvez nous contacter à l&apos;adresse indiquée en bas de cette page.
         </p>
 

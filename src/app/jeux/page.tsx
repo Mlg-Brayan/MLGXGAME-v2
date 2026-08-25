@@ -5,7 +5,7 @@ import { supabase } from '@/lib/supabaseClient';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Tous les jeux - MLGXGAME',
+  title: 'Tous les jeux - MLGxGame',
   description: 'Découvrez tous nos jeux : en ligne, mobile et PC, réunis en un seul endroit.',
 };
 

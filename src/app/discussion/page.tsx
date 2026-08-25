@@ -68,7 +68,7 @@ export default function DiscussionPage() {
       <div style={{ padding: '32px clamp(16px, 4vw, 48px)', maxWidth: '720px', margin: '0 auto' }}>
         <h1>Discussion</h1>
         <p style={{ color: 'var(--text-secondary)', marginBottom: '24px' }}>
-          Échange avec la communauté MLGXGAME : partage tes découvertes, pose des questions, discute jeux.
+          Échange avec la communauté MLGxGame : partage tes découvertes, pose des questions, discute jeux.
         </p>
 
         {userId ? (

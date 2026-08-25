@@ -5,7 +5,7 @@ import { supabase } from '@/lib/supabaseClient';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Jeux PC - MLGXGAME',
+  title: 'Jeux PC - MLGxGame',
   description: 'Découvrez notre sélection de jeux PC, gratuits ou payants, des FPS compétitifs aux jeux d\'aventure en monde ouvert.',
 };
 

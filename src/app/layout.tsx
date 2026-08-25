@@ -19,17 +19,17 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://mlgxgame-v2.vercel.app'),
+  metadataBase: new URL('https://MLGxGame-v2.vercel.app'),
   title: {
-    default: 'MLGXGAME - Catalogue Jeux, Applications & Templates Gaming',
-    template: '%s | MLGXGAME',
+    default: 'MLGxGame - Catalogue Jeux, Applications & Templates Gaming',
+    template: '%s | MLGxGame',
   },
   description: 'Découvre des jeux PC, mobile et en ligne, des applications gaming, des templates web et une boutique dédiée aux gamers.',
   openGraph: {
     type: 'website',
     locale: 'fr_FR',
-    siteName: 'MLGXGAME',
-    title: 'MLGXGAME - Catalogue Jeux, Applications & Templates Gaming',
+    siteName: 'MLGxGame',
+    title: 'MLGxGame - Catalogue Jeux, Applications & Templates Gaming',
     description: 'Découvre des jeux PC, mobile et en ligne, des applications gaming, des templates web et une boutique dédiée aux gamers.',
   },
   twitter: {

@@ -111,7 +111,7 @@ export default function Header() {
         </button>
 
         <a href="/" className="logo-link">
-          <Image src="/logo.svg" alt="MLGXGAME" width={140} height={60} priority />
+          <Image src="/logo.svg" alt="MLGxGame" width={140} height={60} priority />
         </a>
 
         <div className="search-bar" ref={searchRef}>

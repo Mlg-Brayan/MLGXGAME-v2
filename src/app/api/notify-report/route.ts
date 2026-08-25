@@ -22,7 +22,6 @@ export async function POST(request: Request) {
     .eq('reported_user_id', reportedUserId);
 
   if (count !== null && count >= 3) {
-    // Vérifie s'il n'est pas déjà banni (temporairement ou définitivement)
     const { data: alreadyBanned } = await supabaseAdmin
       .from('banned_users')
       .select('id')
@@ -31,7 +30,7 @@ export async function POST(request: Request) {
 
     if (!alreadyBanned) {
       const { data: targetUser } = await supabaseAdmin.auth.admin.getUserById(reportedUserId);
-      const suspensionEnd = new Date(Date.now() + 48 * 60 * 60 * 1000); // 48h
+      const suspensionEnd = new Date(Date.now() + 48 * 60 * 60 * 1000);
 
       await supabaseAdmin.from('banned_users').insert({
         user_id: reportedUserId,
@@ -42,7 +41,7 @@ export async function POST(request: Request) {
     }
 
     await resend.emails.send({
-      from: 'MLGXGAME <onboarding@resend.dev>',
+      from: 'MLGxGame <onboarding@resend.dev>',
       to: process.env.ADMIN_EMAIL!,
       subject: `⚠️ Utilisateur suspendu 48h (${count} signalements)`,
       html: `<p>Un utilisateur a été <strong>automatiquement suspendu 48h</strong> après ${count} signalements.</p>

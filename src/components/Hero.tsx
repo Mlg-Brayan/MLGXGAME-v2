@@ -8,7 +8,7 @@ export default function Hero() {
       <div className="hero-content">
         <span className="hero-tag">JOUE. COMPÈTE. GAGNE.</span>
         <h1 className="hero-title">
-          Bienvenue sur <span className="hero-title-accent">MLGXGAME</span>
+          Bienvenue sur <span className="hero-title-accent">MLGxGame</span>
         </h1>
         <p className="hero-text">
           Découvre les meilleurs jeux PC et Mobile, rejoins la communauté et deviens une légende.
@@ -25,7 +25,7 @@ export default function Hero() {
         </div>
       </div>
       <div className="hero-image">
-        <Image src="/hero-gamer.png" alt="MLGXGAME" fill sizes="500px" priority />
+        <Image src="/hero-gamer.png" alt="MLGxGame" fill sizes="500px" priority />
       </div>
     </section>
   );
