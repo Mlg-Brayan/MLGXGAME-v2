@@ -19,7 +19,6 @@ const handleSubmit = async (e: React.FormEvent) => {
   setLoading(true);
 
   try {
-    // Vérifie si trop de tentatives récentes
     const attemptsCheck = await fetch('/api/check-login-attempts', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -68,6 +67,9 @@ const handleSubmit = async (e: React.FormEvent) => {
 
     router.push('/');
     router.refresh();
+  } catch (err) {
+    console.error('Erreur connexion:', err);
+    setError('Une erreur est survenue. Réessaie.');
   } finally {
     setLoading(false);
   }
