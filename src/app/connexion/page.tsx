@@ -13,40 +13,64 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-
-  const handleSubmit = async (e: React.FormEvent) => {
+const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
   setError('');
   setLoading(true);
 
-  const { error: signInError } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  });
+  try {
+    // Vérifie si trop de tentatives récentes
+    const attemptsCheck = await fetch('/api/check-login-attempts', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }),
+    });
+    const attemptsData = await attemptsCheck.json();
 
-  if (signInError) {
-    setError('Email ou mot de passe incorrect.');
+    if (attemptsData.blocked) {
+      setError(`Trop de tentatives. Réessaie dans ${attemptsData.waitMinutes} minutes.`);
+      return;
+    }
+
+    const { error: signInError } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (signInError) {
+      await fetch('/api/record-login-attempt', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, success: false }),
+      });
+      setError('Email ou mot de passe incorrect.');
+      return;
+    }
+
+    await fetch('/api/record-login-attempt', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, success: true }),
+    });
+
+    const banCheck = await fetch('/api/check-ban', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }),
+    });
+    const banData = await banCheck.json();
+
+    if (banData.banned) {
+      await supabase.auth.signOut();
+      setError('Ce compte a été banni : ' + banData.reason);
+      return;
+    }
+
+    router.push('/');
+    router.refresh();
+  } finally {
     setLoading(false);
-    return;
   }
-
-  // Vérification de bannissement
-  const banCheck = await fetch('/api/check-ban', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email }),
-  });
-  const banData = await banCheck.json();
-
-  if (banData.banned) {
-    await supabase.auth.signOut();
-    setError('Ce compte a été banni : ' + banData.reason);
-    setLoading(false);
-    return;
-  }
-
-  router.push('/');
-  router.refresh();
 };
 
   return (
